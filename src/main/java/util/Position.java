@@ -8,4 +8,9 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Position[x=%d, y=%d]", x, y);
+    }
 }
