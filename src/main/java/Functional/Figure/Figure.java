@@ -1,19 +1,17 @@
-package Functional.Figures;
+package Functional.Figure;
 
 import util.Position;
 
 import java.util.ArrayList;
 
 /**
- * Base Class for every Figure on the Field. Contains if the Figure is white, the Position of the Figure and what Moves the Figure can do.
+ * Base Class for every Figure on the Field. Contains if the Figure is white and what Moves the Figure can do.
  */
 public abstract class Figure {
     private final boolean white;
-    private final Position position;
 
-    public Figure(boolean white, Position position) {
+    public Figure(boolean white) {
         this.white = white;
-        this.position = position;
     }
 
     /*
@@ -26,10 +24,6 @@ public abstract class Figure {
      */
     public boolean isWhite() {
         return white;
-    }
-
-    public Position getPosition() {
-        return position;
     }
 
     /*

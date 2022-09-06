@@ -1,4 +1,4 @@
-package Functional.Figures;
+package Functional.Figure;
 
 import util.Position;
 
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public abstract class ColorIndependentFigure extends Figure {
     private final ArrayList<Position> moveSets;
 
-    public ColorIndependentFigure(boolean white, Position position, ArrayList<Position> moveSets) {
-        super(white, position);
+    public ColorIndependentFigure(boolean white, ArrayList<Position> moveSets) {
+        super(white);
         this.moveSets = moveSets;
     }
 

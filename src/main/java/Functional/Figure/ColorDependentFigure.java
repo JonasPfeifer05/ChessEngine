@@ -1,4 +1,4 @@
-package Functional.Figures;
+package Functional.Figure;
 
 import util.Position;
 
@@ -11,8 +11,8 @@ public abstract class ColorDependentFigure extends Figure {
     private final ArrayList<Position> moveSetsWhite;
     private final ArrayList<Position> moveSetsBlack;
 
-    public ColorDependentFigure(boolean white, Position position, ArrayList<Position> moveSetsWhite, ArrayList<Position> moveSetsBlack) {
-        super(white, position);
+    public ColorDependentFigure(boolean white, ArrayList<Position> moveSetsWhite, ArrayList<Position> moveSetsBlack) {
+        super(white);
         this.moveSetsWhite = moveSetsWhite;
         this.moveSetsBlack = moveSetsBlack;
     }
