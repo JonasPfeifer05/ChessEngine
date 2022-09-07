@@ -1,12 +1,12 @@
-package Functional.Figure.Figures;
+package functional.figure.figures;
 
-import Functional.Figure.PlayerIndependentFigure;
+import functional.figure.PlayerIndependentFigure;
 import util.Player;
 import util.Position;
 
 import java.util.ArrayList;
 
-public class King extends PlayerIndependentFigure {
+public class Bishop extends PlayerIndependentFigure {
 	public static final ArrayList<Position> moveDirections = new ArrayList<>();
 
 	static {
@@ -16,7 +16,7 @@ public class King extends PlayerIndependentFigure {
 		moveDirections.add(new Position(1, -1));
 	}
 
-	public King(Player player) {
-		super(player, moveDirections, moveDirections, 1, 1);
+	public Bishop(Player player) {
+		super(player, moveDirections, moveDirections, 7, 7);
 	}
 }
