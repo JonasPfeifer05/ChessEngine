@@ -1,5 +1,6 @@
 package functional.figure;
 
+import functional.Board;
 import util.Player;
 import util.Position;
 
@@ -43,12 +44,12 @@ public abstract class Figure {
 	 * Abstract Functions
 	 */
 	public abstract ArrayList<Position> getMoveDirections();
-	public ArrayList<Position> getConditionalMoves() {return new ArrayList<Position>();}
-	public void actionOnConditionalMove(Position move) {}
+	public ArrayList<Position> getConditionalMoves(Position from) {return new ArrayList<Position>();}
+	public void actionOnConditionalMove(Board board, Position from, Position move) {}
 
 	public abstract ArrayList<Position> getAttackDirections();
-	public ArrayList<Position> getConditionalAttacks() {return new ArrayList<Position>();}
-	public void actionOnConditionalAttack(Position attack) {}
+	public ArrayList<Position> getConditionalAttacks(Position from) {return new ArrayList<Position>();}
+	public void actionOnConditionalAttack(Board board, Position from, Position attack) {}
 
-	public void actionOnRoundStart() {}
+	public void actionOnRoundStart(Board board) {}
 }
