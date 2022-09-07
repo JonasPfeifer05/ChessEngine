@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.*;
+
 /**
  * Created: 07.09.2022
  *
@@ -7,5 +9,11 @@ package util;
  */
 
 public enum Player {
-	PLAYER1, PLAYER2, PLAYER3, PLAYER4
+	PLAYER1(Color.RED), PLAYER2(Color.BLACK), PLAYER3(Color.BLUE), PLAYER4(Color.GREEN);
+
+	public final Color color;
+
+	Player(Color color) {
+		this.color = color;
+	}
 }

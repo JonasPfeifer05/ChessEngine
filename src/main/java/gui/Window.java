@@ -1,5 +1,7 @@
 package gui;
 
+import functional.Engine;
+
 import javax.swing.*;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,9 +18,13 @@ public class Window {
     public final int width;
     public final int height;
 
-    public Window(int width, int height) {
+    public final Engine engine;
+
+    public Window(int width, int height, Engine engine) {
         this.width = width;
         this.height = height;
+
+        this.engine = engine;
 
         instantiate();
         repaintClock();
