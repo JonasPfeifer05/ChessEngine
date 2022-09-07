@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class Engine {
     private final Board board;
 
-    public Engine() {
-        this.board = new Board();
+    public Engine(int players) {
+        this.board = new Board(players);
     }
 
     public ArrayList<Position> getValidMoves(Position from) throws InvalidMoveException {
@@ -31,11 +31,22 @@ public class Engine {
                     validMoves.add(newPos);
                     continue;
                 }
+                break;
+            }
+        }
 
-                if (at.isWhite() == fromFigure.isWhite()) break;
+        for (Position attackDirection : fromFigure.getAttackDirections()) {
+            for (int i = 0; i < fromFigure.getMaxAttackDistance(); i++) {
+                Position newPos = Position.add(from, Position.mul(attackDirection, i));
 
+                Figure at = board.getFigure(newPos);
+
+                if (at == null) {
+                    continue;
+                }
+
+                if (at.getPlayer() == fromFigure.getPlayer()) break;
                 validMoves.add(newPos);
-
                 break;
             }
         }
@@ -49,7 +60,7 @@ public class Engine {
         Figure fromFigure = board.getFigure(from);
 
         Figure toFigure = board.getFigure(to);
-        if (toFigure.isWhite() == fromFigure.isWhite()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
+        if (toFigure != null && toFigure.getPlayer() == fromFigure.getPlayer()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
 
         ArrayList<Position> validMoves = getValidMoves(from);
 

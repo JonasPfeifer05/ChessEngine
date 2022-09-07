@@ -1,31 +1,32 @@
 package Functional.Figure.Figures;
 
-import Functional.Figure.ColorIndependentFigure;
+import Functional.Figure.PlayerIndependentFigure;
+import util.Player;
 import util.Position;
 
 import java.util.ArrayList;
 
-public class Knight extends ColorIndependentFigure {
-    public static final ArrayList<Position> moveSets = new ArrayList<>();
+public class Knight extends PlayerIndependentFigure {
+    public static final ArrayList<Position> moveDirections = new ArrayList<>();
 
     static {
         int s = 1;
         int l = 2;
-        moveSets.add(new Position(s, l));
-        moveSets.add(new Position(l, s));
+        moveDirections.add(new Position(s, l));
+        moveDirections.add(new Position(l, s));
 
-        moveSets.add(new Position(-s, -l));
-        moveSets.add(new Position(-l, -s));
+        moveDirections.add(new Position(-s, -l));
+        moveDirections.add(new Position(-l, -s));
 
-        moveSets.add(new Position(-s, l));
-        moveSets.add(new Position(-l, s));
+        moveDirections.add(new Position(-s, l));
+        moveDirections.add(new Position(-l, s));
 
-        moveSets.add(new Position(s, -l));
-        moveSets.add(new Position(l, -s));
+        moveDirections.add(new Position(s, -l));
+        moveDirections.add(new Position(l, -s));
 
     }
 
-    public Knight(boolean white) {
-        super(white, moveSets, 1);
+    public Knight(Player player) {
+        super(player, moveDirections, moveDirections, 1, 1);
     }
 }
