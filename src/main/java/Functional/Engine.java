@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class Engine {
     private final Board board;
 
-    public Engine() {
-        this.board = new Board();
+    public Engine(int players) {
+        this.board = new Board(players);
     }
 
     public ArrayList<Position> getValidMoves(Position from) throws InvalidMoveException {

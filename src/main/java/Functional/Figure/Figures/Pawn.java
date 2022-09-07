@@ -19,18 +19,18 @@ public class Pawn extends PlayerDependentFigure {
 
     static {
         moveDirectionsPlayer1.add(new Position(0,1));
-        moveDirectionsPlayer1.add(new Position(-1,0));
-        moveDirectionsPlayer1.add(new Position(0,-1));
-        moveDirectionsPlayer1.add(new Position(1,0));
+        moveDirectionsPlayer4.add(new Position(-1,0));
+        moveDirectionsPlayer2.add(new Position(0,-1));
+        moveDirectionsPlayer3.add(new Position(1,0));
 
         moveDirectionsPlayer1.add(new Position(1,1));
         moveDirectionsPlayer1.add(new Position(-1,1));
-        moveDirectionsPlayer2.add(new Position(-1,1));
+        moveDirectionsPlayer4.add(new Position(-1,1));
+        moveDirectionsPlayer4.add(new Position(-1,-1));
+        moveDirectionsPlayer2.add(new Position(1,-1));
         moveDirectionsPlayer2.add(new Position(-1,-1));
+        moveDirectionsPlayer3.add(new Position(1,1));
         moveDirectionsPlayer3.add(new Position(1,-1));
-        moveDirectionsPlayer3.add(new Position(-1,-1));
-        moveDirectionsPlayer4.add(new Position(1,1));
-        moveDirectionsPlayer4.add(new Position(1,-1));
     }
 
     public Pawn(Player player) {
