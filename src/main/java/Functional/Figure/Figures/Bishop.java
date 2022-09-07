@@ -1,21 +1,22 @@
 package Functional.Figure.Figures;
 
-import Functional.Figure.ColorIndependentFigure;
+import Functional.Figure.PlayerIndependentFigure;
+import util.Player;
 import util.Position;
 
 import java.util.ArrayList;
 
-public class Bishop extends ColorIndependentFigure {
-	public static final ArrayList<Position> moveSets = new ArrayList<>();
+public class Bishop extends PlayerIndependentFigure {
+	public static final ArrayList<Position> moveDirections = new ArrayList<>();
 
 	static {
-		moveSets.add(new Position(1, 1));
-		moveSets.add(new Position(-1, -1));
-		moveSets.add(new Position(-1, 1));
-		moveSets.add(new Position(1, -1));
+		moveDirections.add(new Position(1, 1));
+		moveDirections.add(new Position(-1, -1));
+		moveDirections.add(new Position(-1, 1));
+		moveDirections.add(new Position(1, -1));
 	}
 
-	public Bishop(boolean white) {
-		super(white, moveSets, 7);
+	public Bishop(Player player) {
+		super(player, moveDirections, moveDirections, 7, 7);
 	}
 }

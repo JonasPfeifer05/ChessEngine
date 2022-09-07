@@ -1,5 +1,6 @@
 package Functional.Figure;
 
+import util.Player;
 import util.Position;
 
 import java.util.ArrayList;
@@ -8,12 +9,14 @@ import java.util.ArrayList;
  * Base Class for every Figure on the Field. Contains if the Figure is white and what Moves the Figure can do.
  */
 public abstract class Figure {
-    private final boolean white;
+    private final Player player;
     private final int maxMoveDistance;
+    private final int maxAttackDistance;
 
-    public Figure(boolean white, int maxMoveDistance) {
-        this.white = white;
+    public Figure(Player player, int maxMoveDistance, int maxAttackDistance) {
+        this.player = player;
         this.maxMoveDistance = maxMoveDistance;
+        this.maxAttackDistance = maxAttackDistance;
     }
 
     /*
@@ -24,16 +27,21 @@ public abstract class Figure {
     /*
      * Member Functions
      */
-    public boolean isWhite() {
-        return white;
+    public Player getPlayer() {
+        return player;
     }
 
     public int getMaxMoveDistance() {
         return maxMoveDistance;
     }
 
+    public int getMaxAttackDistance() {
+        return maxAttackDistance;
+    }
+
     /*
      * Abstract Functions
      */
     public abstract ArrayList<Position> getMoveDirections();
+    public abstract ArrayList<Position> getAttackDirections();
 }
