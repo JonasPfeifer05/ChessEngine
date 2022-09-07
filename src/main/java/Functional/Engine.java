@@ -32,7 +32,7 @@ public class Engine {
                     continue;
                 }
 
-                if (at.isWhite() == fromFigure.isWhite()) break;
+                if (at.getPlayer() == fromFigure.getPlayer()) break;
 
                 validMoves.add(newPos);
 
@@ -49,7 +49,7 @@ public class Engine {
         Figure fromFigure = board.getFigure(from);
 
         Figure toFigure = board.getFigure(to);
-        if (toFigure.isWhite() == fromFigure.isWhite()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
+        if (toFigure.getPlayer() == fromFigure.getPlayer()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
 
         ArrayList<Position> validMoves = getValidMoves(from);
 

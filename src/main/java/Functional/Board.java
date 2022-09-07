@@ -1,34 +1,43 @@
 package Functional;
 
 import Functional.Figure.Figure;
-import Functional.Figure.Figures.*;
+import util.Player;
 import util.Position;
 
 public class Board {
-    public static final int FIELDS_PER_SIDE = 8;
+	public static final int FIELDS_PER_SIDE = 14;
 
-    /*
-     * Access via [x][y]
-     */
-    private final Figure[][] board;
+	public static final int FIELDS_PER_CORNER_SIDE = 3;
 
-    public Board() {
-        board = new Figure[FIELDS_PER_SIDE][FIELDS_PER_SIDE];
+	/*
+	 * Access via [x][y]
+	 */
+	private final Figure[][] board;
 
-        setUp();
-    }
+	public Board() {
+		board = new Figure[FIELDS_PER_SIDE][FIELDS_PER_SIDE];
 
-    /*
-    Static Functions
-     */
-    public static boolean inBound(Position position) {
-        return position.x >= 0 && position.x < FIELDS_PER_SIDE && position.y >= 0 && position.y < FIELDS_PER_SIDE;
-    }
+		setUp();
+	}
 
-    /*
-    Member Functions
-    */
-    private void setUp() {
+	/*
+	Static Functions
+	 */
+	public static boolean inBound(Position position) {
+		if (!(position.x >= 0 && position.x < FIELDS_PER_SIDE && position.y >= 0 && position.y < FIELDS_PER_SIDE))
+			return false;
+
+		if (position.y < FIELDS_PER_CORNER_SIDE || position.y >= FIELDS_PER_SIDE - FIELDS_PER_CORNER_SIDE) {
+			return position.x >= FIELDS_PER_CORNER_SIDE && position.x < FIELDS_PER_SIDE - FIELDS_PER_CORNER_SIDE;
+		}
+		return true;
+	}
+
+	/*
+	Member Functions
+	*/
+	private void setUp() {
+        /*
         for (int i = 0; i < FIELDS_PER_SIDE; i++) {
             board[i][1] = new Pawn(true);
             board[i][6] = new Pawn(false);
@@ -51,26 +60,27 @@ public class Board {
         board[5][7] = new Bishop(false);
         board[6][7] = new Knight(false);
         board[7][7] = new Rook(false);
-    }
+         */
+	}
 
-    public void set(Position position, Figure figure) throws IndexOutOfBoundsException {
-        if (!inBound(position)) throw new IndexOutOfBoundsException("Accessed Figure is out of the PlayBoard!");
+	public void set(Position position, Figure figure) throws IndexOutOfBoundsException {
+		if (!inBound(position)) throw new IndexOutOfBoundsException("Accessed Figure is out of the PlayBoard!");
 
-        board[position.x][position.y] = figure;
-    }
+		board[position.x][position.y] = figure;
+	}
 
-    public void move(Position from, Position to) {
-        set(to, getFigure(from));
-        set(from, null);
-    }
+	public void move(Position from, Position to) {
+		set(to, getFigure(from));
+		set(from, null);
+	}
 
-    public Figure getFigure(Position position) throws IndexOutOfBoundsException {
-        if (!inBound(position)) throw new IndexOutOfBoundsException("Accessed Figure is out of the PlayBoard!");
+	public Figure getFigure(Position position) throws IndexOutOfBoundsException {
+		if (!inBound(position)) throw new IndexOutOfBoundsException("Accessed Figure is out of the PlayBoard!");
 
-        return board[position.x][position.y];
-    }
+		return board[position.x][position.y];
+	}
 
-    public boolean isFigureWhite(Position position) {
-        return getFigure(position).isWhite();
-    }
+	public Player getPlayer(Position from) {
+		return board[from.x][from.y].getPlayer();
+	}
 }
