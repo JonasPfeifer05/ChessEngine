@@ -1,6 +1,6 @@
 package gui;
 
-import Functional.Board;
+import functional.Board;
 import util.Position;
 
 import javax.swing.*;
