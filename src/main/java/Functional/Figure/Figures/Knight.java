@@ -26,6 +26,6 @@ public class Knight extends ColorIndependentFigure {
     }
 
     public Knight(boolean white) {
-        super(white, moveSets);
+        super(white, moveSets, 1);
     }
 }

@@ -9,9 +9,11 @@ import java.util.ArrayList;
  */
 public abstract class Figure {
     private final boolean white;
+    private final int maxMoveDistance;
 
-    public Figure(boolean white) {
+    public Figure(boolean white, int maxMoveDistance) {
         this.white = white;
+        this.maxMoveDistance = maxMoveDistance;
     }
 
     /*
@@ -26,8 +28,12 @@ public abstract class Figure {
         return white;
     }
 
+    public int getMaxMoveDistance() {
+        return maxMoveDistance;
+    }
+
     /*
      * Abstract Functions
      */
-    public abstract ArrayList<Position> getMoveSet();
+    public abstract ArrayList<Position> getMoveDirections();
 }

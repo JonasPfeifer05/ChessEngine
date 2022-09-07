@@ -8,20 +8,20 @@ import java.util.ArrayList;
  * A Class for Figures whose MoveSet varies depending on the Color of the Figure.
  */
 public abstract class ColorDependentFigure extends Figure {
-    private final ArrayList<Position> moveSetsWhite;
-    private final ArrayList<Position> moveSetsBlack;
+    private final ArrayList<Position> moveDirectionsWhite;
+    private final ArrayList<Position> moveDirectionBlack;
 
-    public ColorDependentFigure(boolean white, ArrayList<Position> moveSetsWhite, ArrayList<Position> moveSetsBlack) {
-        super(white);
-        this.moveSetsWhite = moveSetsWhite;
-        this.moveSetsBlack = moveSetsBlack;
+    public ColorDependentFigure(boolean white, ArrayList<Position> moveSetsWhite, ArrayList<Position> moveSetsBlack, int maxMoveDistance) {
+        super(white, maxMoveDistance);
+        this.moveDirectionsWhite = moveSetsWhite;
+        this.moveDirectionBlack = moveSetsBlack;
     }
 
     /**
      * @return MoveSet depending on the Color of the Figure
      */
     @Override
-    public ArrayList<Position> getMoveSet() {
-        return this.isWhite() ? moveSetsWhite : moveSetsBlack;
+    public ArrayList<Position> getMoveDirections() {
+        return this.isWhite() ? moveDirectionsWhite : moveDirectionBlack;
     }
 }

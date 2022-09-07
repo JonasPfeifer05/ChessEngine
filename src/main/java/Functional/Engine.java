@@ -21,7 +21,7 @@ public class Engine {
         Figure toFigure = board.getFigure(to);
         if (toFigure.isWhite() == fromFigure.isWhite()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
 
-        for (Position position : fromFigure.getMoveSet()) {
+        for (Position position : fromFigure.getMoveDirections()) {
             if (Position.add(position, from).equals(to)) {
                 board.move(from, to);
                 return;

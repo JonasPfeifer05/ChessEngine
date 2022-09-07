@@ -6,18 +6,17 @@ import util.Position;
 import java.util.ArrayList;
 
 public class Rook extends ColorIndependentFigure {
-    public static final ArrayList<Position> moveSets = new ArrayList<>();
+	public static final ArrayList<Position> moveSets = new ArrayList<>();
 
-    static {
-        for (int i = 1; i < 8; i++) {
-            moveSets.add(new Position(i,0));
-            moveSets.add(new Position(-i,0));
-            moveSets.add(new Position(0,-i));
-            moveSets.add(new Position(0,-i));
-        }
-    }
+	static {
+		moveSets.add(new Position(1, 0));
+		moveSets.add(new Position(-1, 0));
+		moveSets.add(new Position(0, -1));
+		moveSets.add(new Position(0, -1));
 
-    public Rook(boolean white) {
-        super(white, moveSets);
-    }
+	}
+
+	public Rook(boolean white) {
+		super(white, moveSets, 7);
+	}
 }

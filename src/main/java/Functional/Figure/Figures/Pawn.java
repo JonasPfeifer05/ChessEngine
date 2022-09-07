@@ -15,6 +15,6 @@ public class Pawn extends ColorDependentFigure {
     }
 
     public Pawn(boolean white) {
-        super(white, moveSetsWhite, moveSetsBlack);
+        super(white, moveSetsWhite, moveSetsBlack, 1);
     }
 }
