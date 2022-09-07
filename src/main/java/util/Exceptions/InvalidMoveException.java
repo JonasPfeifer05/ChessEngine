@@ -1,4 +1,4 @@
-package util.exceptions;
+package util.Exceptions;
 
 public class InvalidMoveException extends Exception{
     public InvalidMoveException() {

@@ -1,6 +1,6 @@
-package functional.figure.figures;
+package Functional.Figure.Figures;
 
-import functional.figure.PlayerIndependentFigure;
+import Functional.Figure.PlayerIndependentFigure;
 import util.Player;
 import util.Position;
 

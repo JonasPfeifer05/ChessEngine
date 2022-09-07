@@ -1,4 +1,4 @@
-package functional.figure;
+package Functional.Figure;
 
 import util.Player;
 import util.Position;
