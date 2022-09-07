@@ -10,13 +10,13 @@ import java.util.ArrayList;
 public abstract class ColorIndependentFigure extends Figure {
     private final ArrayList<Position> moveSets;
 
-    public ColorIndependentFigure(boolean white, ArrayList<Position> moveSets) {
-        super(white);
+    public ColorIndependentFigure(boolean white, ArrayList<Position> moveSets, int maxMoveDistance) {
+        super(white, maxMoveDistance);
         this.moveSets = moveSets;
     }
 
     @Override
-    public ArrayList<Position> getMoveSet() {
+    public ArrayList<Position> getMoveDirections() {
         return moveSets;
     }
 }

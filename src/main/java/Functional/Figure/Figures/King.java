@@ -6,17 +6,16 @@ import util.Position;
 import java.util.ArrayList;
 
 public class King extends ColorIndependentFigure {
-    public static final ArrayList<Position> moveSets = new ArrayList<>();
+	public static final ArrayList<Position> moveSets = new ArrayList<>();
 
-    static {
-        int i = 1;
-        moveSets.add(new Position(i, i));
-        moveSets.add(new Position(-i, -i));
-        moveSets.add(new Position(-i, i));
-        moveSets.add(new Position(i, -i));
-    }
+	static {
+		moveSets.add(new Position(1, 1));
+		moveSets.add(new Position(-1, -1));
+		moveSets.add(new Position(-1, 1));
+		moveSets.add(new Position(1, -1));
+	}
 
-    public King(boolean white) {
-        super(white, moveSets);
-    }
+	public King(boolean white) {
+		super(white, moveSets, 1);
+	}
 }

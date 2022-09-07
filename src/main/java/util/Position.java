@@ -13,6 +13,10 @@ public class Position {
         return new Position(position1.x + position2.x, position1.y + position2.y);
     }
 
+    public static Position mul(Position position1, int x) {
+        return new Position(position1.x * x, position1.y * x);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
