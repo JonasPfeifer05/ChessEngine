@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public abstract class PlayerIndependentFigure extends Figure {
     private final ArrayList<Position> moveDirections;
+
     private final ArrayList<Position> attackDirections;
 
     public PlayerIndependentFigure(Player player, ArrayList<Position> moveDirections, ArrayList<Position> attackDirections, int maxMoveDistance, int maxAttackDistance) {
