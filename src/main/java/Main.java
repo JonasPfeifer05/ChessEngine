@@ -6,6 +6,7 @@ public class Main {
         System.out.println("Huff ist noch immer dumm!");
         System.out.println("Huff ist immer noch dumm!");
         System.out.println("Hello World");
+
         Window window = new Window(1080,720);
     }
 }

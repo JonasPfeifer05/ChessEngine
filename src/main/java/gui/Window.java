@@ -29,6 +29,7 @@ public class Window {
 
         jFrame.setTitle("Chess");
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        jFrame.setResizable(false);
 
         canvas = new Canvas(this);
         jFrame.add(canvas);
