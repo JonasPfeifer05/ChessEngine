@@ -1,7 +1,7 @@
-package Functional;
+package functional;
 
-import Functional.Figure.Figure;
-import util.Exceptions.InvalidMoveException;
+import functional.figure.Figure;
+import util.exceptions.InvalidMoveException;
 import util.Position;
 
 import java.util.ArrayList;
