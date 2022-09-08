@@ -41,7 +41,7 @@ public class Pawn extends PlayerDependentFigure {
 
 
     @Override
-    public ArrayList<Position> getConditionalMoves(Position from) {
+    public ArrayList<Position> getConditionalMoves(Board board, Position from) {
         ArrayList<Position> additional = new ArrayList<>();
         switch (this.getPlayer()) {
             case PLAYER1 -> {
