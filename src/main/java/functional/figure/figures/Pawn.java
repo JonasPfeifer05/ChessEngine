@@ -55,13 +55,13 @@ public class Pawn extends PlayerDependentFigure {
                 }
             }
             case PLAYER3 -> {
-                if (from.x == 1) {
-                    additional.add(new Position(2,0));
+                if (from.x == 12) {
+                    additional.add(new Position(-2,0));
                 }
             }
             case PLAYER4 -> {
-                if (from.x == 12) {
-                    additional.add(new Position(-2,0));
+                if (from.x == 1) {
+                    additional.add(new Position(2,0));
                 }
             }
         }
