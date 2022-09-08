@@ -52,4 +52,6 @@ public abstract class Figure {
 	public void actionOnConditionalAttack(Board board, Position from, Position attack) {}
 
 	public void actionOnRoundStart(Board board) {}
+
+	public void kill(Board board) {}
 }

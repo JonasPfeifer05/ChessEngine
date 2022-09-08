@@ -95,6 +95,7 @@ public class Board {
 	}
 
 	public void move(Position from, Position to) {
+		if (getFigure(to) != null) getFigure(to).kill(this);
 		set(to, getFigure(from));
 		set(from, null);
 	}
