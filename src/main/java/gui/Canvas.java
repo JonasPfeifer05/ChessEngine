@@ -2,6 +2,7 @@ package gui;
 
 import functional.Board;
 import functional.figure.Figure;
+import functional.figure.figures.*;
 import util.Asset;
 import util.Position;
 
@@ -63,12 +64,23 @@ public class Canvas extends JPanel {
 
                 if (figure != null) {
                     g2d.setColor(figure.getPlayer().color);
-                    g2d.drawImage(Asset.getSprite(figure.getPlayer(),1), (int) (x * cellSize + xOffSet), (int) (y * cellSize), (int) cellSize, (int) cellSize,this);
+                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (x * cellSize + xOffSet), (int) (y * cellSize), (int) cellSize, (int) cellSize, this);
                 }
-
-
             }
         }
+    }
 
+    private int getFigureId(Figure figure) {
+        if (figure instanceof King) {
+            return 0;
+        } else if (figure instanceof Queen) {
+            return 1;
+        } else if (figure instanceof Bishop) {
+            return 2;
+        } else if (figure instanceof Knight) {
+            return 3;
+        } else if (figure instanceof Rook) {
+            return 4;
+        } else return 5;
     }
 }
