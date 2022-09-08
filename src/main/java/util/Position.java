@@ -13,6 +13,10 @@ public class Position {
         return new Position(position1.x + position2.x, position1.y + position2.y);
     }
 
+    public static Position add(Position position, int x, int y) {
+        return new Position(position.x+x, position.y+y);
+    }
+
     public static Position mul(Position position1, int x) {
         return new Position(position1.x * x, position1.y * x);
     }

@@ -45,12 +45,14 @@ public abstract class Figure {
 	 * Abstract Functions
 	 */
 	public abstract ArrayList<Position> getMoveDirections();
-	public ArrayList<Position> getConditionalMoves(Position from) {return new ArrayList<Position>();}
+	public ArrayList<Position> getConditionalMoves(Board board,Position from) {return new ArrayList<>();}
 	public void actionOnConditionalMove(Board board, Position from, Position move) {}
 
 	public abstract ArrayList<Position> getAttackDirections();
-	public ArrayList<Position> getConditionalAttacks(Position from) {return new ArrayList<Position>();}
+	public ArrayList<Position> getConditionalAttacks(Board board,Position from) {return new ArrayList<>();}
 	public void actionOnConditionalAttack(Board board, Position from, Position attack) {}
 
 	public void actionOnRoundStart(Board board) {}
+
+	public void kill(Board board) {}
 }
