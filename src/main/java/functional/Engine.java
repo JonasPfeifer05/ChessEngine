@@ -28,7 +28,7 @@ public class Engine {
                 Figure at = board.getFigure(newPos);
 
                 if (at == null) {
-                    validMoves.add(newPos);
+                    validMoves.add(Position.mul(moveDirection, i));
                     continue;
                 }
                 break;
@@ -46,7 +46,7 @@ public class Engine {
                 }
 
                 if (at.getPlayer() == fromFigure.getPlayer()) break;
-                validMoves.add(newPos);
+                validMoves.add(Position.mul(attackDirection, i));
                 break;
             }
         }
@@ -61,6 +61,30 @@ public class Engine {
 
         Figure toFigure = board.getFigure(to);
         if (toFigure != null && toFigure.getPlayer() == fromFigure.getPlayer()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
+
+        for (Position conditionalMove : fromFigure.getConditionalMoves(from)) {
+            Position newPos = Position.add(from, conditionalMove);
+
+            if (board.getFigure(newPos) != null) continue;
+
+            if (!newPos.equals(to)) continue;
+
+            board.move(from, to);
+            fromFigure.actionOnConditionalMove(board, from, conditionalMove);
+            return;
+        }
+
+        for (Position conditionalAttack : fromFigure.getConditionalAttacks(from)) {
+            Position newPos = Position.add(from, conditionalAttack);
+
+            if (board.getFigure(newPos) == null || board.getFigure(newPos).getPlayer() == fromFigure.getPlayer()) continue;
+
+            if (!newPos.equals(to)) continue;
+
+            board.move(from, to);
+            fromFigure.actionOnConditionalAttack(board, from, conditionalAttack);
+            return;
+        }
 
         ArrayList<Position> validMoves = getValidMoves(from);
 
