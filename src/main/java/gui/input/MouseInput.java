@@ -1,5 +1,8 @@
 package gui.input;
 
+import gui.Window;
+import util.Position;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -10,6 +13,13 @@ import java.awt.event.MouseListener;
  */
 
 public class MouseInput implements MouseListener {
+
+    private final Window window;
+
+    public MouseInput(Window window) {
+        this.window = window;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -17,7 +27,9 @@ public class MouseInput implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        Position position = window.screenToWorldCords(e.getX(), e.getY());
 
+        window.setSelectedPosition(position);
     }
 
     @Override
