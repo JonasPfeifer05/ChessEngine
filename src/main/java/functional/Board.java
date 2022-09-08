@@ -88,6 +88,21 @@ public class Board {
 		}
 	}
 
+	public boolean checkClearance(boolean x, Position from, int range, boolean excludeFirst) {
+		if (!inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is outside the field!");
+
+		for (int i = 0; i < range; i++) {
+			if (i==0 && excludeFirst) continue;
+			if (x) {
+				if (getFigure(Position.add(from, i, 0)) != null) return false;
+			} else {
+				if (getFigure(Position.add(from, 0, i)) != null) return false;
+			}
+		}
+
+		return true;
+	}
+
 	public void set(Position position, Figure figure) throws IndexOutOfBoundsException {
 		if (!inBound(position)) throw new IndexOutOfBoundsException("Accessed Figure is out of the PlayBoard!");
 
@@ -95,6 +110,7 @@ public class Board {
 	}
 
 	public void move(Position from, Position to) {
+		if (getFigure(to) != null) getFigure(to).kill(this);
 		set(to, getFigure(from));
 		set(from, null);
 	}

@@ -13,11 +13,22 @@ public class Engine {
         this.board = new Board(players);
     }
 
-    public ArrayList<Position> getValidMoves(Position from) throws InvalidMoveException {
-        if (!Board.inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is out of bound!");
+    public ArrayList<Position> getAllValidMoves(Position from) {
+        ArrayList<Position> validNormalMoves = getValidNormalMoves(from);
 
         Figure fromFigure = board.getFigure(from);
-        if (fromFigure == null) throw new InvalidMoveException("There is no Figure at " + from + "!");
+
+        validNormalMoves.addAll(fromFigure.getConditionalMoves(board, from));
+        validNormalMoves.addAll(fromFigure.getConditionalAttacks(board, from));
+
+        return validNormalMoves;
+    }
+
+    public ArrayList<Position> getValidNormalMoves(Position from) {
+        if (!Board.inBound(from)) return new ArrayList<>();
+
+        Figure fromFigure = board.getFigure(from);
+        if (fromFigure == null) return new ArrayList<>();
 
         ArrayList<Position> validMoves = new ArrayList<>();
 
@@ -62,7 +73,7 @@ public class Engine {
         Figure toFigure = board.getFigure(to);
         if (toFigure != null && toFigure.getPlayer() == fromFigure.getPlayer()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
 
-        for (Position conditionalMove : fromFigure.getConditionalMoves(from)) {
+        for (Position conditionalMove : fromFigure.getConditionalMoves(board, from)) {
             Position newPos = Position.add(from, conditionalMove);
 
             if (board.getFigure(newPos) != null) continue;
@@ -74,7 +85,7 @@ public class Engine {
             return;
         }
 
-        for (Position conditionalAttack : fromFigure.getConditionalAttacks(from)) {
+        for (Position conditionalAttack : fromFigure.getConditionalAttacks(board, from)) {
             Position newPos = Position.add(from, conditionalAttack);
 
             if (board.getFigure(newPos) == null || board.getFigure(newPos).getPlayer() == fromFigure.getPlayer()) continue;
@@ -86,7 +97,7 @@ public class Engine {
             return;
         }
 
-        ArrayList<Position> validMoves = getValidMoves(from);
+        ArrayList<Position> validMoves = getValidNormalMoves(from);
 
         for (Position position : validMoves) {
             if (Position.add(position, from).equals(to)) {
