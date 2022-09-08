@@ -2,6 +2,7 @@ package gui;
 
 import functional.Board;
 import functional.figure.Figure;
+import util.Asset;
 import util.Position;
 
 import javax.imageio.ImageIO;
@@ -24,17 +25,9 @@ public class Canvas extends JPanel {
     private final Color DARK_COLOR = Color.decode("#262638");
     private final Color LIGHT_COLOR = Color.decode("#e8f3ff");
 
-//    private final BufferedImage img;
-
     public Canvas(Window window) {
         this.window = window;
         setPreferredSize(new Dimension(window.width, window.height));
-
-//        try {
-//            img = ImageIO.read(new File("src/main/resources/Chess_Pieces_Sprite.png"));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     @Override
@@ -70,10 +63,10 @@ public class Canvas extends JPanel {
 
                 if (figure != null) {
                     g2d.setColor(figure.getPlayer().color);
-                    g2d.fillOval((int) (x * cellSize + xOffSet), (int) (y * cellSize), (int) cellSize, (int) cellSize);
+                    g2d.drawImage(Asset.getSprite(figure.getPlayer(),1), (int) (x * cellSize + xOffSet), (int) (y * cellSize), (int) cellSize, (int) cellSize,this);
                 }
 
-//                g2d.drawImage(img.getSubimage(0,0,45,45), (int) (x * cellSize + xOffSet), (int) (y * cellSize), (int) cellSize, (int) cellSize, this);
+
             }
         }
 

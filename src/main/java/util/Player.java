@@ -9,7 +9,7 @@ import java.awt.*;
  */
 
 public enum Player {
-	PLAYER1(Color.RED), PLAYER2(Color.BLACK), PLAYER3(Color.BLUE), PLAYER4(Color.GREEN);
+	PLAYER1(Color.RED), PLAYER2(Color.ORANGE), PLAYER3(Color.BLUE), PLAYER4(Color.GREEN);
 
 	public final Color color;
 

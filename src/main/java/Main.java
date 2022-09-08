@@ -1,5 +1,6 @@
 import functional.Engine;
 import gui.Window;
+import util.Asset;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,6 +9,7 @@ public class Main {
         System.out.println("Huff ist immer noch dumm!");
         System.out.println("Hello World");
 
-        new Window(1080, 720,  new Engine(4));
+        Asset.setUp();
+        new Window(480 / 9 * 16, 480,  new Engine(4));
     }
 }

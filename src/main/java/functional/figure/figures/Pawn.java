@@ -2,9 +2,11 @@ package functional.figure.figures;
 
 import functional.Board;
 import functional.figure.PlayerDependentFigure;
+import util.Asset;
 import util.Player;
 import util.Position;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Pawn extends PlayerDependentFigure {
