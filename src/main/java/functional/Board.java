@@ -40,7 +40,7 @@ public class Board {
 	private void setUp(int players) {
 		if (players < 2) throw new IllegalArgumentException("Cannot play with less than 2 player");
 
-		for (int i = 0; i < FIELDS_PER_SIDE; i++) {
+		for (int i = 0; i < FIELDS_PER_SIDE-2*FIELDS_PER_CORNER_SIDE; i++) {
 			board[i + FIELDS_PER_CORNER_SIDE][1] = new Pawn(Player.PLAYER1);
 			board[i + FIELDS_PER_CORNER_SIDE][12] = new Pawn(Player.PLAYER2);
 			board[1][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER4);
@@ -65,7 +65,7 @@ public class Board {
 		board[6 + FIELDS_PER_CORNER_SIDE][13] = new Knight(Player.PLAYER2);
 		board[7 + FIELDS_PER_CORNER_SIDE][13] = new Rook(Player.PLAYER2);
 
-		if (players <= 4) {
+		if (players >= 4) {
 			board[0][FIELDS_PER_CORNER_SIDE] = new Rook(Player.PLAYER4);
 			board[0][1 + FIELDS_PER_CORNER_SIDE] = new Knight(Player.PLAYER4);
 			board[0][2 + FIELDS_PER_CORNER_SIDE] = new Bishop(Player.PLAYER4);
@@ -76,7 +76,7 @@ public class Board {
 			board[0][7 + FIELDS_PER_CORNER_SIDE] = new Rook(Player.PLAYER4);
 		}
 
-		if (players <= 3) {
+		if (players >= 3) {
 			board[13][FIELDS_PER_CORNER_SIDE] = new Rook(Player.PLAYER3);
 			board[13][1 + FIELDS_PER_CORNER_SIDE] = new Knight(Player.PLAYER3);
 			board[13][2 + FIELDS_PER_CORNER_SIDE] = new Bishop(Player.PLAYER3);
