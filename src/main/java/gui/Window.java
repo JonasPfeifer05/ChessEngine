@@ -1,6 +1,7 @@
 package gui;
 
 import functional.Engine;
+import gui.input.MouseInput;
 
 import javax.swing.*;
 import java.util.Timer;
@@ -36,6 +37,8 @@ public class Window {
         jFrame.setTitle("Chess");
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.setResizable(false);
+
+        jFrame.addMouseListener(new MouseInput());
 
         canvas = new Canvas(this);
         jFrame.add(canvas);
