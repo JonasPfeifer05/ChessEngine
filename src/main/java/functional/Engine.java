@@ -7,7 +7,7 @@ import util.Position;
 import java.util.ArrayList;
 
 public class Engine {
-    private final Board board;
+    public final Board board;
 
     public Engine(int players) {
         this.board = new Board(players);
