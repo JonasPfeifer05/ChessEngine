@@ -40,7 +40,7 @@ public class Board {
 	private void setUp(int players) {
 		if (players < 2) throw new IllegalArgumentException("Cannot play with less than 2 player");
 
-		for (int i = 0; i < FIELDS_PER_SIDE; i++) {
+		for (int i = 0; i < FIELDS_PER_SIDE-2*FIELDS_PER_CORNER_SIDE; i++) {
 			board[i + FIELDS_PER_CORNER_SIDE][1] = new Pawn(Player.PLAYER1);
 			board[i + FIELDS_PER_CORNER_SIDE][12] = new Pawn(Player.PLAYER2);
 			board[1][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER4);
