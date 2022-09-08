@@ -91,7 +91,7 @@ public class Window {
             validMoves = null;
         } else {
             try {
-                validMoves = engine.getValidMoves(selectedPosition);
+                validMoves = engine.getAllValidMoves(selectedPosition);
                 System.out.println(validMoves.size());
             } catch (InvalidMoveException ignored) {
             }
