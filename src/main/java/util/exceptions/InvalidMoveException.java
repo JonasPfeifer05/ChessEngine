@@ -1,6 +1,6 @@
 package util.exceptions;
 
-public class InvalidMoveException extends Exception{
+public class InvalidMoveException extends RuntimeException{
     public InvalidMoveException() {
         super();
     }

@@ -13,7 +13,7 @@ public class Engine {
         this.board = new Board(players);
     }
 
-    public ArrayList<Position> getAllValidMoves(Position from) throws InvalidMoveException {
+    public ArrayList<Position> getAllValidMoves(Position from) {
         ArrayList<Position> validNormalMoves = getValidNormalMoves(from);
 
         Figure fromFigure = board.getFigure(from);
@@ -24,11 +24,11 @@ public class Engine {
         return validNormalMoves;
     }
 
-    public ArrayList<Position> getValidNormalMoves(Position from) throws InvalidMoveException {
-        if (!Board.inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is out of bound!");
+    public ArrayList<Position> getValidNormalMoves(Position from) {
+        if (!Board.inBound(from)) return new ArrayList<>();
 
         Figure fromFigure = board.getFigure(from);
-        if (fromFigure == null) throw new InvalidMoveException("There is no Figure at " + from + "!");
+        if (fromFigure == null) return new ArrayList<>();
 
         ArrayList<Position> validMoves = new ArrayList<>();
 
