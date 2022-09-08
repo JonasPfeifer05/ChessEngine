@@ -1,9 +1,11 @@
 package functional.figure.figures;
 
 import functional.figure.PlayerIndependentFigure;
+import util.Asset;
 import util.Player;
 import util.Position;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Bishop extends PlayerIndependentFigure {

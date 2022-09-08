@@ -4,6 +4,7 @@ import functional.Board;
 import util.Player;
 import util.Position;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
