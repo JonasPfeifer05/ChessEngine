@@ -13,10 +13,6 @@ public class Main {
         System.out.println("Hello World");
 
         Engine engine = new Engine(4);
-        engine.board.set(new Position(2, 3), new Rook(Player.PLAYER1));
-        engine.board.set(new Position(3, 2), new Rook(Player.PLAYER1));
-        engine.board.set(new Position(10, 11), new Rook(Player.PLAYER1));
-        engine.board.set(new Position(11, 10), new Rook(Player.PLAYER1));
 
         engine.getAllValidMoves(new Position(10, 12));
 
