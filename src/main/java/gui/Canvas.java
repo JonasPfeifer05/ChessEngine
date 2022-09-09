@@ -3,15 +3,14 @@ package gui;
 import functional.Board;
 import functional.figure.Figure;
 import functional.figure.figures.*;
+import functional.figure.special.KillLinked;
+import gui.input.MouseInput;
 import util.Asset;
 import util.Position;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created: 07.09.2022
@@ -29,6 +28,8 @@ public class Canvas extends JPanel {
     public Canvas(Window window) {
         this.window = window;
         setPreferredSize(new Dimension(window.width, window.height));
+
+        addMouseListener(new MouseInput(window));
     }
 
     @Override
@@ -42,29 +43,47 @@ public class Canvas extends JPanel {
         g2d.fillRect(0, 0, window.width, window.height);
 
         //grid
-        int completeBoardSize = Board.FIELDS_PER_SIDE;
-        float cellSize = window.height / (float) completeBoardSize;
-        float xOffSet = (window.width - cellSize * completeBoardSize) / 2;
-
         g2d.setFont(new Font(Font.DIALOG, Font.PLAIN, 15));
 
-        for (int x = 0; x < completeBoardSize; x++) {
-            for (int y = 0; y < completeBoardSize; y++) {
+        for (int x = 0; x < Board.FIELDS_PER_SIDE; x++) {
+            for (int y = 0; y < Board.FIELDS_PER_SIDE; y++) {
                 if (!Board.inBound(new Position(x, y))) continue;
 
-                if ((x * completeBoardSize + y) % 2 == x % 2) {
+                if ((x * Board.FIELDS_PER_SIDE + y) % 2 == x % 2) {
                     g2d.setColor(LIGHT_COLOR);
                 } else {
                     g2d.setColor(DARK_COLOR);
                 }
 
-                g2d.fillRect((int) (x * cellSize + xOffSet), (int) (y * cellSize), (int) cellSize, (int) cellSize);
+                g2d.fillRect((int) (x * window.cellSize + window.xOffSet), (int) (y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+            }
+        }
+        //selected Tile
+        Position selectedPosition = window.getSelectedPosition();
 
+        if (selectedPosition != null) {
+            g2d.setColor(Color.GRAY);
+            g2d.fillOval((int) (selectedPosition.x * window.cellSize + window.xOffSet), (int) (selectedPosition.y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+
+            ArrayList<Position> validMoves = window.getValidMoves();
+            if (validMoves != null) {
+                g2d.setColor(Color.green);
+
+                for (Position validMove : validMoves) {
+                    g2d.fillOval((int) (validMove.x * window.cellSize + window.xOffSet), (int) (validMove.y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+                }
+            }
+        }
+
+        //pieces
+        for (int x = 0; x < Board.FIELDS_PER_SIDE; x++) {
+            for (int y = 0; y < Board.FIELDS_PER_SIDE; y++) {
+                if (!Board.inBound(new Position(x, y))) continue;
                 Figure figure = window.engine.board.getFigure(new Position(x, y));
 
-                if (figure != null) {
+                if (figure != null && !(figure instanceof KillLinked)) {
                     g2d.setColor(figure.getPlayer().color);
-                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (x * cellSize + xOffSet), (int) (y * cellSize), (int) cellSize, (int) cellSize, this);
+                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (x * window.cellSize + window.xOffSet), (int) (y * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
                 }
             }
         }
