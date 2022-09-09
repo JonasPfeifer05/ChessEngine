@@ -24,6 +24,7 @@ class EngineTest {
         assertEquals(0, engine.getAllValidMoves(new Position(-1,0)).size());
         assertEquals(0, engine.getAllValidMoves(new Position(0,3)).size());
 
+        assertEquals(2, engine.getAllValidMoves(new Position(3,1)).size());
         assertEquals(2, engine.getAllValidMoves(new Position(1,3)).size());
     }
 

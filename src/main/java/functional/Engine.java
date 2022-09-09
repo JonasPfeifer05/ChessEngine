@@ -14,10 +14,12 @@ public class Engine {
     }
 
     public ArrayList<Position> getAllValidMoves(Position from) {
+        if (!Board.inBound(from)) return new ArrayList<>();
+
         ArrayList<Position> validNormalMoves = getValidNormalMoves(from);
 
-        if (!Board.inBound(from)) return new ArrayList<>();
         Figure fromFigure = board.getFigure(from);
+        if (fromFigure == null) return new ArrayList<>();
 
         validNormalMoves.addAll(fromFigure.getConditionalMoves(board, from));
         validNormalMoves.addAll(fromFigure.getConditionalAttacks(board, from));
@@ -37,6 +39,8 @@ public class Engine {
             for (int i = 1; i < fromFigure.getMaxMoveDistance()+1; i++) {
                 Position newPos = Position.add(from, Position.mul(moveDirection, i));
 
+                if (!Board.inBound(newPos)) break;
+
                 Figure at = board.getFigure(newPos);
 
                 if (at == null) {
@@ -50,6 +54,8 @@ public class Engine {
         for (Position attackDirection : fromFigure.getAttackDirections()) {
             for (int i = 1; i < fromFigure.getMaxAttackDistance()+1; i++) {
                 Position newPos = Position.add(from, Position.mul(attackDirection, i));
+
+                if (!Board.inBound(newPos)) break;
 
                 Figure at = board.getFigure(newPos);
 
@@ -78,6 +84,8 @@ public class Engine {
         for (Position conditionalMove : fromFigure.getConditionalMoves(board, from)) {
             Position newPos = Position.add(from, conditionalMove);
 
+            if (!Board.inBound(newPos)) break;
+
             if (board.getFigure(newPos) != null) continue;
 
             if (!newPos.equals(to)) continue;
@@ -89,6 +97,8 @@ public class Engine {
 
         for (Position conditionalAttack : fromFigure.getConditionalAttacks(board, from)) {
             Position newPos = Position.add(from, conditionalAttack);
+
+            if (!Board.inBound(newPos)) break;
 
             if (board.getFigure(newPos) == null || board.getFigure(newPos).getPlayer() == fromFigure.getPlayer()) continue;
 
