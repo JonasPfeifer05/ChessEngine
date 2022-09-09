@@ -38,6 +38,8 @@ public class Canvas extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        window.update();
+
         //bg
         g2d.setColor(BG_COLOR);
         g2d.fillRect(0, 0, window.width, window.height);
@@ -69,9 +71,9 @@ public class Canvas extends JPanel {
             if (validMoves != null) {
                 for (Position validMove : validMoves) {
 
-                    if(window.engine.board.getFigure(validMove) == null){
+                    if (window.engine.board.getFigure(validMove) == null) {
                         g2d.setColor(Color.green);
-                    }else{
+                    } else {
                         g2d.setColor(Color.RED);
                     }
 
@@ -82,12 +84,23 @@ public class Canvas extends JPanel {
 
         //pieces
         for (int x = 0; x < Board.FIELDS_PER_SIDE; x++) {
+            outer:
             for (int y = 0; y < Board.FIELDS_PER_SIDE; y++) {
                 if (!Board.inBound(new Position(x, y))) continue;
                 Figure figure = window.engine.board.getFigure(new Position(x, y));
 
                 if (figure != null && !(figure instanceof KillLinked)) {
+
                     g2d.setColor(figure.getPlayer().color);
+
+                    for (Animation animation : window.getAnimations()) {
+                        if (animation.endPos.x == x && animation.endPos.y == y) {
+                            g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (animation.getX() * window.cellSize + window.xOffSet), (int) (animation.getY() * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
+
+                            continue outer;
+                        }
+                    }
+
                     g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (x * window.cellSize + window.xOffSet), (int) (y * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
                 }
             }

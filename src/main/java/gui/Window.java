@@ -27,6 +27,7 @@ public class Window {
 
     private Position selectedPosition;
     private ArrayList<Position> validMoves;
+    private ArrayList<Animation> animations = new ArrayList<>();
 
     public Window(int width, int height, Engine engine) {
         this.width = width;
@@ -96,12 +97,14 @@ public class Window {
             validMoves.replaceAll(position1 -> Position.add(position1, selectedPosition));
         }
     }
-    public void manageClick(Position position){
-        if(validMoves != null) {
+
+    public void manageClick(Position position) {
+        if (validMoves != null) {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
                     engine.move(selectedPosition, validMove);
+                    animations.add(new Animation(selectedPosition, validMove));
 
                     validMoves = null;
                     selectedPosition = null;
@@ -116,5 +119,23 @@ public class Window {
 
     public ArrayList<Position> getValidMoves() {
         return validMoves;
+    }
+
+    public void update() {
+        ArrayList<Animation> animationsToRemove = new ArrayList<>();
+
+        for (Animation animation : animations) {
+            if (animation.update()) {
+                animationsToRemove.add(animation);
+            }
+        }
+
+        for (Animation animation : animationsToRemove) {
+            animations.remove(animation);
+        }
+    }
+
+    public ArrayList<Animation> getAnimations() {
+        return animations;
     }
 }
