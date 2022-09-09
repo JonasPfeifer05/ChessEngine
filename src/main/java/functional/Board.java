@@ -121,7 +121,9 @@ public class Board {
 		return board[position.x][position.y];
 	}
 
-	public Player getPlayer(Position from) {
+	public Player getPlayer(Position from) throws IndexOutOfBoundsException {
+		if (!inBound(from)) throw new IndexOutOfBoundsException("Accessed Figure is out of the PlayBoard!");
+
 		return board[from.x][from.y].getPlayer();
 	}
 }
