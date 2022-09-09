@@ -18,7 +18,7 @@ public class KillLinked extends Figure {
 	private Position pos;
 	private Position pawn;
 
-	private int roundCount = 2;
+	private int roundCount = 4;
 
 	public KillLinked(Player player, Position pos, Position pawn) {
 		super(player, 0, 0);

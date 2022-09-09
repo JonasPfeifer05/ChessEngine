@@ -126,4 +126,13 @@ public class Board {
 
 		return board[from.x][from.y].getPlayer();
 	}
+
+	public void onRound() {
+		for (Figure[] figures : board) {
+			for (Figure figure : figures) {
+				if (figure == null) continue;
+				figure.actionOnRoundStart(this);
+			}
+		}
+	}
 }

@@ -24,6 +24,6 @@ public class Queen extends PlayerIndependentFigure {
     }
 
     public Queen(Player player) {
-        super(player, moveDirections, moveDirections, 7, 7);
+        super(player, moveDirections, moveDirections, 13, 13);
     }
 }

@@ -76,6 +76,9 @@ public class Engine {
         if (!Board.inBound(to)) throw new IndexOutOfBoundsException("Position " + to + " is out of bound!");
         if (!Board.inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is out of bound!");
 
+        //TEMPORARY
+        board.onRound();
+
         Figure fromFigure = board.getFigure(from);
 
         Figure toFigure = board.getFigure(to);
