@@ -1,9 +1,6 @@
 import functional.Engine;
-import functional.figure.figures.Rook;
 import gui.Window;
 import util.Asset;
-import util.Player;
-import util.Position;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,12 +10,9 @@ public class Main {
         System.out.println("Hello World");
 
         Engine engine = new Engine(4);
-        engine.board.set(new Position(2, 3), new Rook(Player.PLAYER1));
-        engine.board.set(new Position(3, 2), new Rook(Player.PLAYER1));
-        engine.board.set(new Position(10, 11), new Rook(Player.PLAYER1));
-        engine.board.set(new Position(11, 10), new Rook(Player.PLAYER1));
 
-        engine.getAllValidMoves(new Position(10, 12));
+        engine.board.load("src/main/resources/start_save.txt");
+        engine.board.save("src/main/resources/test_save.txt");
 
         Asset.setUp();
         new Window(480 / 9 * 16, 480, engine);
