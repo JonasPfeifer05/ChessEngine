@@ -9,16 +9,25 @@ public class Position {
         this.y = y;
     }
 
+    public void add(Position position) {
+        x += position.x;
+        y += position.y;
+    }
+
     public static Position add(Position position1, Position position2) {
         return new Position(position1.x + position2.x, position1.y + position2.y);
     }
 
     public static Position add(Position position, int x, int y) {
-        return new Position(position.x+x, position.y+y);
+        return new Position(position.x + x, position.y + y);
     }
 
     public static Position mul(Position position1, int x) {
         return new Position(position1.x * x, position1.y * x);
+    }
+
+    public Position copy() {
+        return new Position(x, y);
     }
 
     @Override

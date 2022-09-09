@@ -81,7 +81,7 @@ public class Engine {
         if (!Board.inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is out of bound!");
 
         //TEMPORARY
-        board.onRound();
+        board.onRoundStart();
 
         Figure fromFigure = board.getFigure(from);
 
@@ -99,6 +99,8 @@ public class Engine {
 
             board.move(from, to);
             fromFigure.actionOnConditionalMove(board, from, conditionalMove);
+            //TEMPORARY
+            board.onRoundEnd();
             return;
         }
 
@@ -113,6 +115,8 @@ public class Engine {
 
             board.move(from, to);
             fromFigure.actionOnConditionalAttack(board, from, conditionalAttack);
+            //TEMPORARY
+            board.onRoundEnd();
             return;
         }
 
@@ -121,6 +125,8 @@ public class Engine {
         for (Position position : validMoves) {
             if (Position.add(position, from).equals(to)) {
                 board.move(from, to);
+                //TEMPORARY
+                board.onRoundEnd();
                 return;
             }
         }
