@@ -4,7 +4,6 @@ import functional.Board;
 import util.Player;
 import util.Position;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -52,7 +51,8 @@ public abstract class Figure {
 	public ArrayList<Position> getConditionalAttacks(Board board,Position from) {return new ArrayList<>();}
 	public void actionOnConditionalAttack(Board board, Position from, Position attack) {}
 
-	public void actionOnRoundStart(Board board) {}
+	public void actionOnRoundStart(Board board, Position from) {}
+	public void actionOnRoundEnd(Board board, Position from) {}
 
 	public void kill(Board board) {}
 }

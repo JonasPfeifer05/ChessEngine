@@ -11,8 +11,8 @@ public class Main {
 
         Engine engine = new Engine(4);
 
-        engine.board.load("src/main/resources/start_save.txt");
-        engine.board.save("src/main/resources/test_save.txt");
+        //engine.board.load("src/main/resources/start_save.txt");
+        //engine.board.save("src/main/resources/test_save.txt");
 
         Asset.setUp();
         new Window(480 / 9 * 16, 480, engine);
