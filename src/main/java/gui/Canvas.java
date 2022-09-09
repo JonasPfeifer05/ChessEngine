@@ -67,9 +67,14 @@ public class Canvas extends JPanel {
 
             ArrayList<Position> validMoves = window.getValidMoves();
             if (validMoves != null) {
-                g2d.setColor(Color.green);
-
                 for (Position validMove : validMoves) {
+
+                    if(window.engine.board.getFigure(validMove) == null){
+                        g2d.setColor(Color.green);
+                    }else{
+                        g2d.setColor(Color.RED);
+                    }
+
                     g2d.fillOval((int) (validMove.x * window.cellSize + window.xOffSet), (int) (validMove.y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
                 }
             }
