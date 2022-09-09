@@ -24,10 +24,10 @@ public class Window {
 
     public final float cellSize;
     public final float xOffSet;
+    private final ArrayList<Animation> animations = new ArrayList<>();
 
     private Position selectedPosition;
     private ArrayList<Position> validMoves;
-    private ArrayList<Animation> animations = new ArrayList<>();
 
     public Window(int width, int height, Engine engine) {
         this.width = width;
@@ -103,8 +103,8 @@ public class Window {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
+                    animations.add(new Animation(engine.board.getFigure(selectedPosition),selectedPosition, validMove));
                     engine.move(selectedPosition, validMove);
-                    animations.add(new Animation(selectedPosition, validMove));
 
                     validMoves = null;
                     selectedPosition = null;

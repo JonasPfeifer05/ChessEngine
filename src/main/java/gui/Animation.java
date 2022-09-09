@@ -10,12 +10,14 @@ import util.Position;
  */
 public class Animation {
 
+    public final Figure figure;
     public final Position endPos;
 
     private float x;
     private float y;
 
-    public Animation(Position startPos, Position endPos) {
+    public Animation(Figure figure, Position startPos, Position endPos) {
+        this.figure = figure;
         this.endPos = endPos;
 
         x = startPos.x;

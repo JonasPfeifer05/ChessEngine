@@ -94,7 +94,7 @@ public class Canvas extends JPanel {
                     g2d.setColor(figure.getPlayer().color);
 
                     for (Animation animation : window.getAnimations()) {
-                        if (animation.endPos.x == x && animation.endPos.y == y) {
+                        if (animation.figure.equals(figure)) {
                             g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (animation.getX() * window.cellSize + window.xOffSet), (int) (animation.getY() * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
 
                             continue outer;
