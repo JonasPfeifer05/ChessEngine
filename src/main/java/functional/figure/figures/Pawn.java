@@ -1,6 +1,7 @@
 package functional.figure.figures;
 
 import functional.Board;
+import functional.figure.Figure;
 import functional.figure.PlayerDependentFigure;
 import functional.figure.special.KillLinked;
 import util.Player;
@@ -93,5 +94,28 @@ public class Pawn extends PlayerDependentFigure {
                 board.set(linkPos, new KillLinked(this.getPlayer(), linkPos, pawnPos));
             }
         }
+    }
+
+    @Override
+    public void actionOnRoundEnd(Board board, Position from) {
+        switch (this.getPlayer()) {
+
+            case PLAYER1 -> {
+                if (!(from.y == 13)) return;
+            }
+            case PLAYER2 -> {
+                if (!(from.y == 0)) return;
+            }
+            case PLAYER3 -> {
+                if (!(from.x == 0)) return;
+            }
+            case PLAYER4 -> {
+                if (!(from.x == 13)) return;
+            }
+        }
+
+        //GET USER INPUT
+        Figure changeTo = new Queen(this.getPlayer());
+        board.set(from, changeTo);
     }
 }

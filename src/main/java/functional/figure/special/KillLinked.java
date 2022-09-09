@@ -37,7 +37,7 @@ public class KillLinked extends Figure {
 	}
 
 	@Override
-	public void actionOnRoundStart(Board board) {
+	public void actionOnRoundStart(Board board, Position from) {
 		roundCount--;
 		if (roundCount <= 0) board.set(pos, null);
 	}

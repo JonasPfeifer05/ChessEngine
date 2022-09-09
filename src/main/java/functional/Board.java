@@ -191,11 +191,29 @@ public class Board {
 		return false;
 	}
 
-	public void onRound() {
-		for (Figure[] figures : board) {
-			for (Figure figure : figures) {
+	public void onRoundStart() {
+		for (int x = 0; x < board.length; x++) {
+			for (int y = 0; y < board[x].length; y++) {
+
+				Position pos = new Position(x, y);
+				if (!inBound(pos)) continue;
+				Figure figure = getFigure(pos);
+
 				if (figure == null) continue;
-				figure.actionOnRoundStart(this);
+				figure.actionOnRoundStart(this, pos);
+			}
+		}
+	}
+
+	public void onRoundEnd() {
+		for (int x = 0; x < board.length; x++) {
+			for (int y = 0; y < board[x].length; y++) {
+				Position pos = new Position(x, y);
+				if (!inBound(pos)) continue;
+				Figure figure = getFigure(pos);
+
+				if (figure == null) continue;
+				figure.actionOnRoundEnd(this, pos);
 			}
 		}
 	}
