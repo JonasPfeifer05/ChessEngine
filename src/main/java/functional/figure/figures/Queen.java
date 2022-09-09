@@ -20,7 +20,7 @@ public class Queen extends PlayerIndependentFigure {
         moveDirections.add(new Position(1, 0));
         moveDirections.add(new Position(-1, 0));
         moveDirections.add(new Position(0, -1));
-        moveDirections.add(new Position(0, -1));
+        moveDirections.add(new Position(0, 1));
     }
 
     public Queen(Player player) {

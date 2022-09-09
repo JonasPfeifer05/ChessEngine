@@ -13,7 +13,7 @@ public class Rook extends PlayerIndependentFigure {
         moveDirections.add(new Position(1, 0));
         moveDirections.add(new Position(-1, 0));
         moveDirections.add(new Position(0, -1));
-        moveDirections.add(new Position(0, -1));
+        moveDirections.add(new Position(0, 1));
     }
 
     public Rook(Player player) {

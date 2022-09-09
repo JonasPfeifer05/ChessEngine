@@ -1,6 +1,8 @@
 package functional;
 
 import functional.figure.Figure;
+import functional.figure.PlayerDependentFigure;
+import functional.figure.PlayerIndependentFigure;
 import functional.figure.figures.*;
 import util.Player;
 import util.Position;
@@ -91,12 +93,12 @@ public class Board {
 	public boolean checkClearance(boolean x, Position from, int range, boolean excludeFirst) {
 		if (!inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is outside the field!");
 
-		for (int i = 0; i < range; i++) {
+		for (int i = 0; i < Math.abs(range); i++) {
 			if (i==0 && excludeFirst) continue;
 			if (x) {
-				if (getFigure(Position.add(from, i, 0)) != null) return false;
+				if (figureAt(Position.add(from, i*Integer.signum(range), 0))) return false;
 			} else {
-				if (getFigure(Position.add(from, 0, i)) != null) return false;
+				if (figureAt(Position.add(from, 0, i*Integer.signum(range)))) return false;
 			}
 		}
 
@@ -125,6 +127,14 @@ public class Board {
 		if (!inBound(from)) throw new IndexOutOfBoundsException("Accessed Figure is out of the PlayBoard!");
 
 		return board[from.x][from.y].getPlayer();
+	}
+
+	public boolean figureAt(Position from) {
+		if (getFigure(from) == null) return false;
+
+		if (getFigure(from) instanceof PlayerDependentFigure || getFigure(from) instanceof PlayerIndependentFigure) return true;
+
+		return false;
 	}
 
 	public void onRound() {
