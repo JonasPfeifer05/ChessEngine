@@ -64,8 +64,9 @@ public class Canvas extends JPanel {
         Position selectedPosition = window.getSelectedPosition();
 
         if (selectedPosition != null) {
+            g2d.setStroke(new BasicStroke(4));
             g2d.setColor(Color.GRAY);
-            g2d.fillOval((int) (selectedPosition.x * window.cellSize + window.xOffSet), (int) (selectedPosition.y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+            g2d.drawOval((int) (selectedPosition.x * window.cellSize + window.xOffSet) + 3, (int) (selectedPosition.y * window.cellSize) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
 
             ArrayList<Position> validMoves = window.getValidMoves();
             if (validMoves != null) {
@@ -77,7 +78,7 @@ public class Canvas extends JPanel {
                         g2d.setColor(Color.RED);
                     }
 
-                    g2d.fillOval((int) (validMove.x * window.cellSize + window.xOffSet), (int) (validMove.y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+                    g2d.drawOval((int) (validMove.x * window.cellSize + window.xOffSet) + 3, (int) (validMove.y * window.cellSize) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
                 }
             }
         }
