@@ -1,6 +1,7 @@
 package functional;
 
 import functional.figure.Figure;
+import functional.figure.special.KillLinked;
 import util.exceptions.InvalidMoveException;
 import util.Position;
 
@@ -55,11 +56,15 @@ public class Engine {
 
                 if (!Board.inBound(newPos)) break;
 
+                Figure at = board.getFigure(newPos);
 
                 if (!board.figureAt(newPos)) {
+                    if (at instanceof KillLinked) {
+                        if (at.getPlayer() == fromFigure.getPlayer()) continue;
+                        validMoves.add(Position.mul(attackDirection, i));
+                    }
                     continue;
                 }
-                Figure at = board.getFigure(newPos);
 
 
                 if (at.getPlayer() == fromFigure.getPlayer()) break;

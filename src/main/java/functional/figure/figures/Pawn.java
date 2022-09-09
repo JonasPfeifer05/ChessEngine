@@ -101,16 +101,16 @@ public class Pawn extends PlayerDependentFigure {
         switch (this.getPlayer()) {
 
             case PLAYER1 -> {
-                if (!(from.y == 13)) return;
+                if (!(from.y == 13 || (from.y == 10 && (from.x < 3 || from.x > 10)))) return;
             }
             case PLAYER2 -> {
-                if (!(from.y == 0)) return;
+                if (!(from.y == 0 || (from.y == 3 && (from.x < 3 || from.x > 10)))) return;
             }
             case PLAYER3 -> {
-                if (!(from.x == 0)) return;
+                if (!(from.x == 0 || (from.x == 3 && (from.y < 3 || from.y > 10)))) return;
             }
             case PLAYER4 -> {
-                if (!(from.x == 13)) return;
+                if (!(from.x == 13 || (from.x == 10 && (from.y < 3 || from.y > 10)))) return;
             }
         }
 
