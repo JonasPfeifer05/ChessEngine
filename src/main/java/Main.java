@@ -1,4 +1,5 @@
 import functional.Engine;
+import functional.figure.figures.Pawn;
 import functional.figure.figures.Rook;
 import functional.figure.special.KillLinked;
 import gui.Window;
@@ -14,8 +15,6 @@ public class Main {
         System.out.println("Hello World");
 
         Engine engine = new Engine(4);
-
-        engine.getAllValidMoves(new Position(10, 12));
 
         Asset.setUp();
         new Window(480 / 9 * 16, 480, engine);
