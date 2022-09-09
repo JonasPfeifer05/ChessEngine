@@ -29,47 +29,47 @@ public class King extends PlayerIndependentFigure {
 	public ArrayList<Position> getConditionalMoves(Board board, Position from) {
 		ArrayList<Position> ret = new ArrayList<>();
 
-		Position look1 = new Position(3, 0);
-		Position look2 = new Position(4, 0);
+		int s = 3;
+		int l = 4;
 
-		try {
-			if (board.getFigure(Position.add(from, look1)) instanceof Knight) {
-				if (board.checkClearance(true, from, 2, true)) {
-					ret.add(new Position(2, 0));
+		for (int i = -1; i <= 1; i+=2) {
+			if (board.getPlayer(from) == Player.PLAYER1 || board.getPlayer(from) == Player.PLAYER2) {
+				try {
+					if (board.getFigure(Position.add(from, new Position(i*s,0))) instanceof Rook) {
+						if (board.checkClearance(true, from, i*s, true)) {
+							ret.add(new Position(i*2, 0));
+						}
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					if (board.getFigure(Position.add(from, new Position(i*l,0))) instanceof Rook) {
+						if (board.checkClearance(true, from, i*l, true)) {
+							ret.add(new Position(i*2, 0));
+						}
+					}
+				} catch (Exception e) {
+				}
+			} else {
+				try {
+					if (board.getFigure(Position.add(from, new Position(0,i*s))) instanceof Rook) {
+						if (board.checkClearance(false, from, i*s, true)) {
+							ret.add(new Position(0,i*2));
+						}
+					}
+				} catch (Exception e) {
+				}
+
+				try {
+					if (board.getFigure(Position.add(from, new Position(0,i*l))) instanceof Rook) {
+						if (board.checkClearance(false, from, i*l, true)) {
+							ret.add(new Position(0,i*2));
+						}
+					}
+				} catch (Exception e) {
 				}
 			}
-		} catch (IndexOutOfBoundsException e) {
-			throw new RuntimeException(e);
-		}
-
-		try {
-			if (board.getFigure(Position.add(from, look2)) instanceof Knight) {
-				if (board.checkClearance(true, from, 3, true)) {
-					ret.add(new Position(2, 0));
-				}
-			}
-		} catch (IndexOutOfBoundsException e) {
-			throw new RuntimeException(e);
-		}
-
-		try {
-			if (board.getFigure(Position.add(from, Position.mul(look1, -1))) instanceof Knight) {
-				if (board.checkClearance(true, from, -2, true)) {
-					ret.add(new Position(-2, 0));
-				}
-			}
-		} catch (IndexOutOfBoundsException e) {
-			throw new RuntimeException(e);
-		}
-
-		try {
-			if (board.getFigure(Position.add(from, Position.mul(look2, -1))) instanceof Knight) {
-				if (board.checkClearance(true, from, -3, true)) {
-					ret.add(new Position(-2, 0));
-				}
-			}
-		} catch (IndexOutOfBoundsException e) {
-			throw new RuntimeException(e);
 		}
 
 		return ret;
@@ -78,16 +78,28 @@ public class King extends PlayerIndependentFigure {
 	@Override
 	public void actionOnConditionalMove(Board board, Position from, Position move) {
 		if (move.x == 2) {
-			if (board.getFigure(Position.add(from, 3, 0)) instanceof Knight) {
+			if (board.getFigure(Position.add(from, 3, 0)) instanceof Rook) {
 				board.move(Position.add(from, 3, 0), Position.add(from, 1, 0));
 			} else {
 				board.move(Position.add(from, 4, 0), Position.add(from, 1, 0));
 			}
-		} else {
-			if (board.getFigure(Position.add(from, -3, 0)) instanceof Knight) {
+		} else if (move.x == -2){
+			if (board.getFigure(Position.add(from, -3, 0)) instanceof Rook) {
 				board.move(Position.add(from, -3, 0), Position.add(from, -1, 0));
 			} else {
 				board.move(Position.add(from, -4, 0), Position.add(from, -1, 0));
+			}
+		} else if (move.y == 2) {
+			if (board.getFigure(Position.add(from, 0, 3)) instanceof Rook) {
+				board.move(Position.add(from, 0, 3), Position.add(from, 0, 1));
+			} else {
+				board.move(Position.add(from, 0, 4), Position.add(from, 0, 1));
+			}
+		} else {
+			if (board.getFigure(Position.add(from, 0, -3)) instanceof Rook) {
+				board.move(Position.add(from, 0, -3), Position.add(from, 0, -1));
+			} else {
+				board.move(Position.add(from, 0, -4), Position.add(from, 0, -1));
 			}
 		}
 	}
