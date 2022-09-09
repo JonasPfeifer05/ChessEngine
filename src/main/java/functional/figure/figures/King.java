@@ -15,6 +15,10 @@ public class King extends PlayerIndependentFigure {
 		moveDirections.add(new Position(-1, -1));
 		moveDirections.add(new Position(-1, 1));
 		moveDirections.add(new Position(1, -1));
+		moveDirections.add(new Position(1, 0));
+		moveDirections.add(new Position(-1, 0));
+		moveDirections.add(new Position(0, -1));
+		moveDirections.add(new Position(0, 1));
 	}
 
 	public King(Player player) {
