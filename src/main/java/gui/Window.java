@@ -3,7 +3,6 @@ package gui;
 import functional.Board;
 import functional.Engine;
 import util.Position;
-import util.exceptions.InvalidMoveException;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -85,17 +84,34 @@ public class Window {
     }
 
     public void setSelectedPosition(Position selectedPosition) {
+        if (engine.board.getFigure(selectedPosition) == null) return;
+
         this.selectedPosition = selectedPosition;
 
         if (selectedPosition == null) {
             validMoves = null;
         } else {
-            try {
-                validMoves = engine.getAllValidMoves(selectedPosition);
-                System.out.println(validMoves.size());
-            } catch (InvalidMoveException ignored) {
+            validMoves = engine.getAllValidMoves(selectedPosition);
+
+            validMoves.replaceAll(position1 -> Position.add(position1, selectedPosition));
+        }
+    }
+    public void manageClick(Position position){
+        if(validMoves != null) {
+            for (Position validMove : validMoves) {
+                if (validMove.equals(position)) {
+
+                    engine.move(selectedPosition, validMove);
+
+                    validMoves = null;
+                    selectedPosition = null;
+
+                    return;
+                }
             }
         }
+
+        setSelectedPosition(position);
     }
 
     public ArrayList<Position> getValidMoves() {

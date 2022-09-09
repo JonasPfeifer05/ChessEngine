@@ -3,6 +3,7 @@ package gui;
 import functional.Board;
 import functional.figure.Figure;
 import functional.figure.figures.*;
+import functional.figure.special.KillLinked;
 import gui.input.MouseInput;
 import util.Asset;
 import util.Position;
@@ -80,7 +81,7 @@ public class Canvas extends JPanel {
                 if (!Board.inBound(new Position(x, y))) continue;
                 Figure figure = window.engine.board.getFigure(new Position(x, y));
 
-                if (figure != null) {
+                if (figure != null && !(figure instanceof KillLinked)) {
                     g2d.setColor(figure.getPlayer().color);
                     g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (x * window.cellSize + window.xOffSet), (int) (y * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
                 }

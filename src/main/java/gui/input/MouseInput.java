@@ -29,7 +29,7 @@ public class MouseInput implements MouseListener {
     public void mousePressed(MouseEvent e) {
         Position position = window.screenToWorldCords(e.getX(), e.getY());
 
-        window.setSelectedPosition(position);
+        window.manageClick(position);
     }
 
     @Override
