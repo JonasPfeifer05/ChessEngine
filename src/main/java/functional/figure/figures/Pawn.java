@@ -46,21 +46,25 @@ public class Pawn extends PlayerDependentFigure {
         switch (this.getPlayer()) {
             case PLAYER1 -> {
                 if (from.y == 1) {
+                    if (!board.checkClearance(false, from, 3, true)) return new ArrayList<>();
                     additional.add(new Position(0,2));
                 }
             }
             case PLAYER2 -> {
                 if (from.y == 12) {
+                    if (!board.checkClearance(false, from, -3, true)) return new ArrayList<>();
                     additional.add(new Position(0,-2));
                 }
             }
             case PLAYER3 -> {
                 if (from.x == 12) {
+                    if (!board.checkClearance(true, from, -3, true)) return new ArrayList<>();
                     additional.add(new Position(-2,0));
                 }
             }
             case PLAYER4 -> {
                 if (from.x == 1) {
+                    if (!board.checkClearance(true, from, 3, true)) return new ArrayList<>();
                     additional.add(new Position(2,0));
                 }
             }

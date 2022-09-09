@@ -18,8 +18,8 @@ public class Engine {
 
         ArrayList<Position> validNormalMoves = getValidNormalMoves(from);
 
+        if (!board.figureAt(from)) return new ArrayList<>();
         Figure fromFigure = board.getFigure(from);
-        if (fromFigure == null) return new ArrayList<>();
 
         validNormalMoves.addAll(fromFigure.getConditionalMoves(board, from));
         validNormalMoves.addAll(fromFigure.getConditionalAttacks(board, from));
@@ -30,8 +30,8 @@ public class Engine {
     public ArrayList<Position> getValidNormalMoves(Position from) {
         if (!Board.inBound(from)) return new ArrayList<>();
 
+        if (!board.figureAt(from)) return new ArrayList<>();
         Figure fromFigure = board.getFigure(from);
-        if (fromFigure == null) return new ArrayList<>();
 
         ArrayList<Position> validMoves = new ArrayList<>();
 
@@ -41,9 +41,7 @@ public class Engine {
 
                 if (!Board.inBound(newPos)) break;
 
-                Figure at = board.getFigure(newPos);
-
-                if (at == null) {
+                if (!board.figureAt(newPos)) {
                     validMoves.add(Position.mul(moveDirection, i));
                     continue;
                 }
@@ -57,11 +55,12 @@ public class Engine {
 
                 if (!Board.inBound(newPos)) break;
 
-                Figure at = board.getFigure(newPos);
 
-                if (at == null) {
+                if (!board.figureAt(newPos)) {
                     continue;
                 }
+                Figure at = board.getFigure(newPos);
+
 
                 if (at.getPlayer() == fromFigure.getPlayer()) break;
                 validMoves.add(Position.mul(attackDirection, i));
@@ -76,17 +75,20 @@ public class Engine {
         if (!Board.inBound(to)) throw new IndexOutOfBoundsException("Position " + to + " is out of bound!");
         if (!Board.inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is out of bound!");
 
+        //TEMPORARY
+        board.onRound();
+
         Figure fromFigure = board.getFigure(from);
 
         Figure toFigure = board.getFigure(to);
-        if (toFigure != null && toFigure.getPlayer() == fromFigure.getPlayer()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
+        if (board.figureAt(to) && toFigure.getPlayer() == fromFigure.getPlayer()) throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
 
         for (Position conditionalMove : fromFigure.getConditionalMoves(board, from)) {
             Position newPos = Position.add(from, conditionalMove);
 
             if (!Board.inBound(newPos)) break;
 
-            if (board.getFigure(newPos) != null) continue;
+            if (board.figureAt(newPos)) continue;
 
             if (!newPos.equals(to)) continue;
 
@@ -100,7 +102,7 @@ public class Engine {
 
             if (!Board.inBound(newPos)) break;
 
-            if (board.getFigure(newPos) == null || board.getFigure(newPos).getPlayer() == fromFigure.getPlayer()) continue;
+            if (!board.figureAt(newPos) || board.getFigure(newPos).getPlayer() == fromFigure.getPlayer()) continue;
 
             if (!newPos.equals(to)) continue;
 
