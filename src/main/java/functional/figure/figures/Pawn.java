@@ -21,18 +21,18 @@ public class Pawn extends PlayerDependentFigure {
 
     static {
         moveDirectionsPlayer1.add(new Position(0,1));
-        moveDirectionsPlayer4.add(new Position(-1,0));
+        moveDirectionsPlayer4.add(new Position(1,0));
         moveDirectionsPlayer2.add(new Position(0,-1));
-        moveDirectionsPlayer3.add(new Position(1,0));
+        moveDirectionsPlayer3.add(new Position(-1,0));
 
-        moveDirectionsPlayer1.add(new Position(1,1));
-        moveDirectionsPlayer1.add(new Position(-1,1));
-        moveDirectionsPlayer4.add(new Position(-1,1));
-        moveDirectionsPlayer4.add(new Position(-1,-1));
-        moveDirectionsPlayer2.add(new Position(1,-1));
-        moveDirectionsPlayer2.add(new Position(-1,-1));
-        moveDirectionsPlayer3.add(new Position(1,1));
-        moveDirectionsPlayer3.add(new Position(1,-1));
+        attackDirectionsPlayer1.add(new Position(1,1));
+        attackDirectionsPlayer1.add(new Position(-1,1));
+        attackDirectionsPlayer4.add(new Position(1,1));
+        attackDirectionsPlayer4.add(new Position(1,-1));
+        attackDirectionsPlayer2.add(new Position(1,-1));
+        attackDirectionsPlayer2.add(new Position(-1,-1));
+        attackDirectionsPlayer3.add(new Position(-1,1));
+        attackDirectionsPlayer3.add(new Position(-1,-1));
     }
 
     public Pawn(Player player) {
@@ -55,13 +55,13 @@ public class Pawn extends PlayerDependentFigure {
                 }
             }
             case PLAYER3 -> {
-                if (from.x == 1) {
-                    additional.add(new Position(2,0));
+                if (from.x == 12) {
+                    additional.add(new Position(-2,0));
                 }
             }
             case PLAYER4 -> {
-                if (from.x == 12) {
-                    additional.add(new Position(-2,0));
+                if (from.x == 1) {
+                    additional.add(new Position(2,0));
                 }
             }
         }

@@ -14,9 +14,12 @@ public class Engine {
     }
 
     public ArrayList<Position> getAllValidMoves(Position from) {
+        if (!Board.inBound(from)) return new ArrayList<>();
+
         ArrayList<Position> validNormalMoves = getValidNormalMoves(from);
 
         Figure fromFigure = board.getFigure(from);
+        if (fromFigure == null) return new ArrayList<>();
 
         validNormalMoves.addAll(fromFigure.getConditionalMoves(board, from));
         validNormalMoves.addAll(fromFigure.getConditionalAttacks(board, from));
@@ -33,8 +36,10 @@ public class Engine {
         ArrayList<Position> validMoves = new ArrayList<>();
 
         for (Position moveDirection : fromFigure.getMoveDirections()) {
-            for (int i = 0; i < fromFigure.getMaxMoveDistance(); i++) {
+            for (int i = 1; i < fromFigure.getMaxMoveDistance()+1; i++) {
                 Position newPos = Position.add(from, Position.mul(moveDirection, i));
+
+                if (!Board.inBound(newPos)) break;
 
                 Figure at = board.getFigure(newPos);
 
@@ -47,8 +52,10 @@ public class Engine {
         }
 
         for (Position attackDirection : fromFigure.getAttackDirections()) {
-            for (int i = 0; i < fromFigure.getMaxAttackDistance(); i++) {
+            for (int i = 1; i < fromFigure.getMaxAttackDistance()+1; i++) {
                 Position newPos = Position.add(from, Position.mul(attackDirection, i));
+
+                if (!Board.inBound(newPos)) break;
 
                 Figure at = board.getFigure(newPos);
 
@@ -67,6 +74,7 @@ public class Engine {
 
     public void move(Position from, Position to) throws InvalidMoveException, IndexOutOfBoundsException {
         if (!Board.inBound(to)) throw new IndexOutOfBoundsException("Position " + to + " is out of bound!");
+        if (!Board.inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is out of bound!");
 
         Figure fromFigure = board.getFigure(from);
 
@@ -75,6 +83,8 @@ public class Engine {
 
         for (Position conditionalMove : fromFigure.getConditionalMoves(board, from)) {
             Position newPos = Position.add(from, conditionalMove);
+
+            if (!Board.inBound(newPos)) break;
 
             if (board.getFigure(newPos) != null) continue;
 
@@ -87,6 +97,8 @@ public class Engine {
 
         for (Position conditionalAttack : fromFigure.getConditionalAttacks(board, from)) {
             Position newPos = Position.add(from, conditionalAttack);
+
+            if (!Board.inBound(newPos)) break;
 
             if (board.getFigure(newPos) == null || board.getFigure(newPos).getPlayer() == fromFigure.getPlayer()) continue;
 
