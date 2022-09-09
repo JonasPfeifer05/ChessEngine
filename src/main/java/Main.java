@@ -1,5 +1,6 @@
 import functional.Engine;
 import functional.figure.figures.Rook;
+import functional.figure.special.KillLinked;
 import gui.Window;
 import util.Asset;
 import util.Player;
