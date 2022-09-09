@@ -29,8 +29,8 @@ public class Animation {
         double dirY = endPos.y - y;
         double length = Math.sqrt(Math.pow(dirX, 2) + Math.pow(dirY, 2));
 
-        x += dirX / length * 0.1;
-        y += dirY / length * 0.1;
+        x += dirX / length * length / 10;
+        y += dirY / length * length / 10;
 
         return length < 0.05;
     }
