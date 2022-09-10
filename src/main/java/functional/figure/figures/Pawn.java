@@ -1,6 +1,6 @@
 package functional.figure.figures;
 
-import util.Board;
+import functional.Board;
 import functional.figure.Figure;
 import functional.figure.PlayerDependentFigure;
 import functional.figure.special.KillLinked;
