@@ -1,7 +1,7 @@
 package gui;
 
 import functional.Board;
-import functional.Engine;
+import functional.Game;
 import util.Position;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.util.TimerTask;
 
 public class Window {
     private Canvas canvas;
-    public final Engine engine;
+    public final Game game;
 
     public final int width;
     public final int height;
@@ -29,14 +29,14 @@ public class Window {
     private Position selectedPosition;
     private ArrayList<Position> validMoves;
 
-    public Window(int width, int height, Engine engine) {
+    public Window(int width, int height, Game engine) {
         this.width = width;
         this.height = height;
 
         cellSize = height / (float) Board.FIELDS_PER_SIDE;
         xOffSet = (width - cellSize * Board.FIELDS_PER_SIDE) / 2;
 
-        this.engine = engine;
+        this.game = engine;
 
         instantiate();
         repaintClock();
@@ -85,14 +85,14 @@ public class Window {
     }
 
     public void setSelectedPosition(Position selectedPosition) {
-        if (engine.board.getFigure(selectedPosition) == null) return;
+        if (game.engine.board.getFigure(selectedPosition) == null) return;
 
         this.selectedPosition = selectedPosition;
 
         if (selectedPosition == null) {
             validMoves = null;
         } else {
-            validMoves = engine.getAllValidMoves(selectedPosition);
+            validMoves = game.getAllValidMoves(selectedPosition);
 
             validMoves.replaceAll(position1 -> Position.add(position1, selectedPosition));
         }
@@ -103,7 +103,8 @@ public class Window {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
-                    engine.move(selectedPosition, validMove);
+                    animations.add(new Animation(game.engine.board.getFigure(selectedPosition),selectedPosition, validMove));
+                    game.move(selectedPosition, validMove);
 
                     validMoves = null;
                     selectedPosition = null;
@@ -136,9 +137,5 @@ public class Window {
 
     public ArrayList<Animation> getAnimations() {
         return animations;
-    }
-
-    public void addAnimation(Position startPos, Position endPos) {
-        animations.add(new Animation(engine.board.getFigure(startPos), startPos, endPos));
     }
 }

@@ -4,13 +4,13 @@ import functional.figure.Figure;
 import functional.figure.PlayerDependentFigure;
 import functional.figure.PlayerIndependentFigure;
 import functional.figure.figures.*;
-import main.Main;
 import util.DoubleSet;
 import util.Player;
 import util.Position;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Board {
 	public static final int FIELDS_PER_SIDE = 14;
@@ -18,6 +18,11 @@ public class Board {
 	public static final int FIELDS_PER_CORNER_SIDE = 3;
 
 	public final ArrayList<DoubleSet<Position, Position>> moves = new ArrayList<>();
+
+	public final ArrayList<Figure> killed_Player1 = new ArrayList<>();
+	public final ArrayList<Figure> killed_Player2 = new ArrayList<>();
+	public final ArrayList<Figure> killed_Player3 = new ArrayList<>();
+	public final ArrayList<Figure> killed_Player4 = new ArrayList<>();
 
 	/*
 	 * Access via [x][y]
@@ -164,14 +169,72 @@ public class Board {
 		board[position.x][position.y] = figure;
 	}
 
-	public void move(Position from, Position to) {
-		Main.window.addAnimation(from,to);
+	public ArrayList<Figure> getKilled(Player player) {
+		switch (player) {
+			case PLAYER1 -> {
+				return killed_Player1;
+			}
+			case PLAYER2 -> {
+				return killed_Player2;
+			}
+			case PLAYER3 -> {
+				return killed_Player3;
+			}
+			case PLAYER4 -> {
+				return killed_Player4;
+			}
+		}
+		throw new IllegalArgumentException("Invalid player");
+	}
 
-		if (getFigure(to) != null) getFigure(to).kill(this);
+	public void move(Position from, Position to) {
+		if (getFigure(to) != null) {
+			Figure fig = getFigure(to);
+			fig.kill(this);
+			switch (fig.getPlayer()) {
+
+				case PLAYER1 -> {
+					killed_Player1.add(fig);
+				}
+				case PLAYER2 -> {
+					killed_Player2.add(fig);
+				}
+				case PLAYER3 -> {
+					killed_Player3.add(fig);
+				}
+				case PLAYER4 -> {
+					killed_Player4.add(fig);
+				}
+			}
+
+		}
 		set(to, getFigure(from));
 		set(from, null);
-		getFigure(to).move(to);
 		moves.add(new DoubleSet<>(from, to));
+	}
+
+	public ArrayList<Figure> getAllFigures() {
+		ArrayList<Figure> figs = new ArrayList<>();
+
+		for (Figure[] figures : board) {
+			Collections.addAll(figs, figures);
+		}
+
+		return figs;
+	}
+
+	public ArrayList<Position> getAllPositions() {
+		ArrayList<Position> positions = new ArrayList<>();
+
+		for (int i = 0; i < board.length; i++) {
+			for (int i1 = 0; i1 < board[i].length; i1++) {
+				if (board[i][i1] == null) continue;
+
+				positions.add(new Position(i, i1));
+			}
+		}
+
+		return positions;
 	}
 
 	public Figure getFigure(Position position) throws IndexOutOfBoundsException {
