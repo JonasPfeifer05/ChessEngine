@@ -13,6 +13,9 @@ import java.io.IOException;
  */
 public class Asset {
 
+    public static final String RUN_PATH = "src/main/resources/";
+    public static final String JAR_PATH = "../resources/main/";
+
     public static final int PIECE_COUNT = 6;
     public static final int SPRITE_SIZE = 45;
 
@@ -22,11 +25,22 @@ public class Asset {
     private static final BufferedImage[] spritesPlayer3 = new BufferedImage[PIECE_COUNT];
     private static final BufferedImage[] spritesPlayer4 = new BufferedImage[PIECE_COUNT];
 
+    public static File getFile(String name) {
+        File file;
+
+        file = new File(RUN_PATH+name);
+        if (file.exists()) return file;
+
+        file = new File(JAR_PATH+name);
+
+        return file;
+    }
+
     public static void setUp() {
         BufferedImage img;
 
         try {
-            img = ImageIO.read(new File("src/main/resources/Chess_Pieces_Sprite.png"));
+            img = ImageIO.read(getFile("Chess_Pieces_Sprite.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
