@@ -38,6 +38,8 @@ public class Canvas extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        window.update();
+
         //bg
         g2d.setColor(BG_COLOR);
         g2d.fillRect(0, 0, window.width, window.height);
@@ -62,27 +64,44 @@ public class Canvas extends JPanel {
         Position selectedPosition = window.getSelectedPosition();
 
         if (selectedPosition != null) {
+            g2d.setStroke(new BasicStroke(4));
             g2d.setColor(Color.GRAY);
-            g2d.fillOval((int) (selectedPosition.x * window.cellSize + window.xOffSet), (int) (selectedPosition.y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+            g2d.drawOval((int) (selectedPosition.x * window.cellSize + window.xOffSet) + 3, (int) (selectedPosition.y * window.cellSize) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
 
             ArrayList<Position> validMoves = window.getValidMoves();
             if (validMoves != null) {
-                g2d.setColor(Color.green);
-
                 for (Position validMove : validMoves) {
-                    g2d.fillOval((int) (validMove.x * window.cellSize + window.xOffSet), (int) (validMove.y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+
+                    if (window.engine.board.getFigure(validMove) == null) {
+                        g2d.setColor(Color.green);
+                    } else {
+                        g2d.setColor(Color.RED);
+                    }
+
+                    g2d.drawOval((int) (validMove.x * window.cellSize + window.xOffSet) + 3, (int) (validMove.y * window.cellSize) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
                 }
             }
         }
 
         //pieces
         for (int x = 0; x < Board.FIELDS_PER_SIDE; x++) {
+            outer:
             for (int y = 0; y < Board.FIELDS_PER_SIDE; y++) {
                 if (!Board.inBound(new Position(x, y))) continue;
                 Figure figure = window.engine.board.getFigure(new Position(x, y));
 
                 if (figure != null && !(figure instanceof KillLinked)) {
+
                     g2d.setColor(figure.getPlayer().color);
+
+                    for (Animation animation : window.getAnimations()) {
+                        if (animation.figure.equals(figure)) {
+                            g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (animation.getX() * window.cellSize + window.xOffSet), (int) (animation.getY() * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
+
+                            continue outer;
+                        }
+                    }
+
                     g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (x * window.cellSize + window.xOffSet), (int) (y * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
                 }
             }

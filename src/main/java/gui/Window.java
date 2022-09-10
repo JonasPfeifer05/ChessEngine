@@ -24,6 +24,7 @@ public class Window {
 
     public final float cellSize;
     public final float xOffSet;
+    private final ArrayList<Animation> animations = new ArrayList<>();
 
     private Position selectedPosition;
     private ArrayList<Position> validMoves;
@@ -96,11 +97,13 @@ public class Window {
             validMoves.replaceAll(position1 -> Position.add(position1, selectedPosition));
         }
     }
-    public void manageClick(Position position){
-        if(validMoves != null) {
+
+    public void manageClick(Position position) {
+        if (validMoves != null) {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
+                    animations.add(new Animation(engine.board.getFigure(selectedPosition),selectedPosition, validMove));
                     engine.move(selectedPosition, validMove);
 
                     validMoves = null;
@@ -116,5 +119,23 @@ public class Window {
 
     public ArrayList<Position> getValidMoves() {
         return validMoves;
+    }
+
+    public void update() {
+        ArrayList<Animation> animationsToRemove = new ArrayList<>();
+
+        for (Animation animation : animations) {
+            if (animation.update()) {
+                animationsToRemove.add(animation);
+            }
+        }
+
+        for (Animation animation : animationsToRemove) {
+            animations.remove(animation);
+        }
+    }
+
+    public ArrayList<Animation> getAnimations() {
+        return animations;
     }
 }
