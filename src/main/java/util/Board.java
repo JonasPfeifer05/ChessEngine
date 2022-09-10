@@ -1,4 +1,4 @@
-package functional;
+package util;
 
 import functional.figure.Figure;
 import functional.figure.PlayerDependentFigure;

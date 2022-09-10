@@ -1,11 +1,9 @@
 package tests;
 
-import functional.Board;
 import functional.Engine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Position;
-import util.exceptions.InvalidMoveException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
