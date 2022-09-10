@@ -39,16 +39,20 @@ public class Game {
 
 		ArrayList<Position> validMoves = engine.getAllValidMoves(from);
 
+		ArrayList<Position> tempValid = new ArrayList<>();
+
 		if (engine.board.getFigure(from) instanceof King) {
 			if (lookCheck(engine.board.getPlayer(from))) {
-				for (Position validMove : validMoves) {
-					for (Position invalidKingMove : getInvalidKingMoves(from)) {
-						if (validMove.equals(new Position(validMove.x, validMove.y))) {
-							validMoves.remove(validMove);
-							break;
+				ArrayList<Position> invalidMoves = getInvalidKingMoves(from);
+				for (int i = 0; i < validMoves.size(); i++) {
+					Position abs = Position.add(validMoves.get(i), from);
+					for (int j = 0; j < invalidMoves.size(); j++) {
+						if (!abs.equals(invalidMoves.get(j))) {
+							tempValid.add(validMoves.get(i));
 						}
 					}
 				}
+				return tempValid;
 			}
 		}
 
