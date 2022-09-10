@@ -1,6 +1,6 @@
 package gui;
 
-import functional.Board;
+import util.Board;
 import functional.figure.Figure;
 import functional.figure.figures.*;
 import functional.figure.special.KillLinked;

@@ -1,3 +1,5 @@
+package main;
+
 import functional.Engine;
 import functional.figure.figures.Pawn;
 import functional.figure.figures.Rook;
