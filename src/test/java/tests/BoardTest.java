@@ -1,6 +1,6 @@
 package tests;
 
-import util.Board;
+import functional.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Player;

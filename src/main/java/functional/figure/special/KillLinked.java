@@ -1,6 +1,6 @@
 package functional.figure.special;
 
-import util.Board;
+import functional.Board;
 import functional.figure.Figure;
 import util.Player;
 import util.Position;

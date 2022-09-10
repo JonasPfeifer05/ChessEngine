@@ -1,6 +1,6 @@
 package gui;
 
-import util.Board;
+import functional.Board;
 import functional.Engine;
 import util.Position;
 
