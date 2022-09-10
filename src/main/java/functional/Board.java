@@ -18,6 +18,11 @@ public class Board {
 
 	public final ArrayList<DoubleSet<Position, Position>> moves = new ArrayList<>();
 
+	public final ArrayList<Figure> killed_Player1 = new ArrayList<>();
+	public final ArrayList<Figure> killed_Player2 = new ArrayList<>();
+	public final ArrayList<Figure> killed_Player3 = new ArrayList<>();
+	public final ArrayList<Figure> killed_Player4 = new ArrayList<>();
+
 	/*
 	 * Access via [x][y]
 	 */
@@ -163,8 +168,45 @@ public class Board {
 		board[position.x][position.y] = figure;
 	}
 
+	public ArrayList<Figure> getKilled(Player player) {
+		switch (player) {
+			case PLAYER1 -> {
+				return killed_Player1;
+			}
+			case PLAYER2 -> {
+				return killed_Player2;
+			}
+			case PLAYER3 -> {
+				return killed_Player3;
+			}
+			case PLAYER4 -> {
+				return killed_Player4;
+			}
+		}
+		throw new IllegalArgumentException("Invalid player");
+	}
+
 	public void move(Position from, Position to) {
-		if (getFigure(to) != null) getFigure(to).kill(this);
+		if (getFigure(to) != null) {
+			Figure fig = getFigure(to);
+			fig.kill(this);
+			switch (fig.getPlayer()) {
+
+				case PLAYER1 -> {
+					killed_Player1.add(fig);
+				}
+				case PLAYER2 -> {
+					killed_Player2.add(fig);
+				}
+				case PLAYER3 -> {
+					killed_Player3.add(fig);
+				}
+				case PLAYER4 -> {
+					killed_Player4.add(fig);
+				}
+			}
+
+		}
 		set(to, getFigure(from));
 		set(from, null);
 		moves.add(new DoubleSet<>(from, to));
