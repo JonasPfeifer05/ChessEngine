@@ -4,6 +4,7 @@ import functional.figure.Figure;
 import functional.figure.PlayerDependentFigure;
 import functional.figure.PlayerIndependentFigure;
 import functional.figure.figures.*;
+import main.Main;
 import util.DoubleSet;
 import util.Player;
 import util.Position;
@@ -164,6 +165,8 @@ public class Board {
 	}
 
 	public void move(Position from, Position to) {
+		Main.window.addAnimation(from,to);
+
 		if (getFigure(to) != null) getFigure(to).kill(this);
 		set(to, getFigure(from));
 		set(from, null);

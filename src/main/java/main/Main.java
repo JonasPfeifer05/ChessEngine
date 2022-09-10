@@ -10,6 +10,9 @@ import util.Player;
 import util.Position;
 
 public class Main {
+
+    public static Window window;
+
     public static void main(String[] args) {
         System.out.println("Huff ist dumm!");
         System.out.println("Huff ist noch immer dumm!");
@@ -19,6 +22,6 @@ public class Main {
         Engine engine = new Engine(4);
 
         Asset.setUp();
-        new Window(480 / 9 * 16, 480, engine);
+        window = new Window(480 / 9 * 16, 480, engine);
     }
 }
