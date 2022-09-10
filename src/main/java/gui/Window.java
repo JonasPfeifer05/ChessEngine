@@ -71,13 +71,7 @@ public class Window {
         int worldX = (int) ((x - xOffSet) / cellSize);
         int worldY = (int) (y / cellSize);
 
-        if (worldX >= 0 && worldX < Board.FIELDS_PER_SIDE && worldY >= 0 && worldY < Board.FIELDS_PER_SIDE) {
-            Position position = new Position(worldX, worldY);
-
-            if (Board.inBound(position)) return position;
-        }
-
-        return null;
+        return new Position(worldX, worldY);
     }
 
     public Position getSelectedPosition() {
@@ -99,11 +93,14 @@ public class Window {
     }
 
     public void manageClick(Position position) {
+
+        if (!Board.inBound(position)) return;
+
         if (validMoves != null) {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
-                    animations.add(new Animation(engine.board.getFigure(selectedPosition),selectedPosition, validMove));
+                    animations.add(new Animation(engine.board.getFigure(selectedPosition), selectedPosition, validMove));
                     engine.move(selectedPosition, validMove);
 
                     validMoves = null;
