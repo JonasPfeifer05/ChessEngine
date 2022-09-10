@@ -16,7 +16,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'functional.Main'
+        attributes 'Main-Class': 'Main'
     }
 }
 
