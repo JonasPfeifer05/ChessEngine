@@ -10,6 +10,7 @@ import util.Position;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Board {
 	public static final int FIELDS_PER_SIDE = 14;
@@ -210,6 +211,30 @@ public class Board {
 		set(to, getFigure(from));
 		set(from, null);
 		moves.add(new DoubleSet<>(from, to));
+	}
+
+	public ArrayList<Figure> getAllFigures() {
+		ArrayList<Figure> figs = new ArrayList<>();
+
+		for (Figure[] figures : board) {
+			Collections.addAll(figs, figures);
+		}
+
+		return figs;
+	}
+
+	public ArrayList<Position> getAllPositions() {
+		ArrayList<Position> positions = new ArrayList<>();
+
+		for (int i = 0; i < board.length; i++) {
+			for (int i1 = 0; i1 < board[i].length; i1++) {
+				if (board[i][i1] == null) continue;
+
+				positions.add(new Position(i, i1));
+			}
+		}
+
+		return positions;
 	}
 
 	public Figure getFigure(Position position) throws IndexOutOfBoundsException {

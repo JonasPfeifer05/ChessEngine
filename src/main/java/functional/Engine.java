@@ -5,6 +5,7 @@ import functional.figure.special.KillLinked;
 import util.exceptions.InvalidMoveException;
 import util.Position;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Engine {
@@ -76,12 +77,44 @@ public class Engine {
         return validMoves;
     }
 
-    public void move(Position from, Position to) throws InvalidMoveException, IndexOutOfBoundsException {
+    public ArrayList<Position> getAllValidAttacksAbsKing(Position from) {
+        if (!Board.inBound(from)) return new ArrayList<>();
+
+        if (!board.figureAt(from)) return new ArrayList<>();
+        Figure fromFigure = board.getFigure(from);
+
+        ArrayList<Position> validMoves = new ArrayList<>();
+
+        for (Position attackDirection : fromFigure.getAttackDirections()) {
+            for (int i = 1; i < fromFigure.getMaxAttackDistance()+1; i++) {
+                Position newPos = Position.add(from, Position.mul(attackDirection, i));
+
+                if (!Board.inBound(newPos)) break;
+
+                Figure at = board.getFigure(newPos);
+
+                if (!board.figureAt(newPos)) {
+                    validMoves.add(Position.add(from, Position.mul(attackDirection, i)));
+                    continue;
+                }
+
+
+                if (at.getPlayer() == fromFigure.getPlayer()) break;
+                validMoves.add(Position.add(from, Position.mul(attackDirection, i)));
+                break;
+            }
+        }
+
+        for (Position conditionalAttack : fromFigure.getConditionalAttacks(board, from)) {
+            validMoves.add(Position.add(from, conditionalAttack));
+        }
+
+        return validMoves;
+    }
+
+    public void move(Position from, Position to, ArrayList<Position> exclude) throws InvalidMoveException, IndexOutOfBoundsException {
         if (!Board.inBound(to)) throw new IndexOutOfBoundsException("Position " + to + " is out of bound!");
         if (!Board.inBound(from)) throw new IndexOutOfBoundsException("Position " + from + " is out of bound!");
-
-        //TEMPORARY
-        board.onRoundStart();
 
         Figure fromFigure = board.getFigure(from);
 
@@ -91,7 +124,8 @@ public class Engine {
         for (Position conditionalMove : fromFigure.getConditionalMoves(board, from)) {
             Position newPos = Position.add(from, conditionalMove);
 
-            if (!Board.inBound(newPos)) break;
+            if (!Board.inBound(newPos)) continue;
+            if (exclude.contains(newPos)) continue;
 
             if (board.figureAt(newPos)) continue;
 
@@ -99,15 +133,15 @@ public class Engine {
 
             board.move(from, to);
             fromFigure.actionOnConditionalMove(board, from, conditionalMove);
-            //TEMPORARY
-            board.onRoundEnd();
             return;
         }
 
         for (Position conditionalAttack : fromFigure.getConditionalAttacks(board, from)) {
             Position newPos = Position.add(from, conditionalAttack);
 
-            if (!Board.inBound(newPos)) break;
+            if (!Board.inBound(newPos)) continue;
+            if (exclude.contains(newPos)) continue;
+
 
             if (!board.figureAt(newPos) || board.getFigure(newPos).getPlayer() == fromFigure.getPlayer()) continue;
 
@@ -115,8 +149,6 @@ public class Engine {
 
             board.move(from, to);
             fromFigure.actionOnConditionalAttack(board, from, conditionalAttack);
-            //TEMPORARY
-            board.onRoundEnd();
             return;
         }
 
@@ -124,13 +156,16 @@ public class Engine {
 
         for (Position position : validMoves) {
             if (Position.add(position, from).equals(to)) {
+                if (exclude.contains(Position.add(position, from))) continue;
                 board.move(from, to);
-                //TEMPORARY
-                board.onRoundEnd();
                 return;
             }
         }
 
         throw new InvalidMoveException("Move from " + from + " to " + to + " is invalid!");
+    }
+
+    public void move(Position from, Position to) throws InvalidMoveException, IndexOutOfBoundsException {
+        move(from, to, new ArrayList<>());
     }
 }
