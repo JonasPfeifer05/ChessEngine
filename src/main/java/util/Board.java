@@ -1,4 +1,4 @@
-package functional;
+package util;
 
 import functional.figure.Figure;
 import functional.figure.PlayerDependentFigure;
@@ -170,7 +170,6 @@ public class Board {
 		if (getFigure(to) != null) getFigure(to).kill(this);
 		set(to, getFigure(from));
 		set(from, null);
-		getFigure(to).move(to);
 		moves.add(new DoubleSet<>(from, to));
 	}
 

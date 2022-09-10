@@ -1,6 +1,6 @@
 package functional.figure;
 
-import functional.Board;
+import util.Board;
 import util.Player;
 import util.Position;
 
@@ -55,6 +55,4 @@ public abstract class Figure {
 	public void actionOnRoundEnd(Board board, Position from) {}
 
 	public void kill(Board board) {}
-
-	public void move(Position from) {}
 }
