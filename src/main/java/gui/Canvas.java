@@ -96,16 +96,20 @@ public class Canvas extends JPanel {
 
                     for (Animation animation : window.getAnimations()) {
                         if (animation.figure.equals(figure)) {
-                            g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(animation.getX()), window.toScreenY(animation.getY()), (int) window.getCellSize(), (int) window.getCellSize(), this);
+                            drawFigure(g2d, figure, animation.getX(), animation.getY());
 
                             continue outer;
                         }
                     }
 
-                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize(), this);
+                    drawFigure(g2d, figure, x, y);
                 }
             }
         }
+    }
+
+    private void drawFigure(Graphics2D g2d, Figure figure, float x, float y) {
+        g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize(), this);
     }
 
     private int getFigureId(Figure figure) {
