@@ -2,6 +2,7 @@ package gui;
 
 import functional.Board;
 import functional.Game;
+import functional.figure.Figure;
 import util.Position;
 
 import javax.swing.*;
@@ -105,7 +106,8 @@ public class Window {
     }
 
     public void setSelectedPosition(Position selectedPosition) {
-        if (game.engine.board.getFigure(selectedPosition) == null) return;
+        Figure figure = game.engine.board.getFigure(selectedPosition);
+        if (figure == null || figure.getPlayer() != game.getCurrentPlayer()) return;
 
         this.selectedPosition = selectedPosition;
 
