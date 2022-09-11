@@ -27,7 +27,7 @@ public class Canvas extends JPanel {
 
     public Canvas(Window window) {
         this.window = window;
-        setPreferredSize(new Dimension(window.width, window.height));
+        setPreferredSize(new Dimension(window.getWidth(), window.getHeight()));
 
         addMouseListener(new MouseInput(window));
     }
@@ -42,7 +42,7 @@ public class Canvas extends JPanel {
 
         //bg
         g2d.setColor(BG_COLOR);
-        g2d.fillRect(0, 0, window.width, window.height);
+        g2d.fillRect(0, 0, window.getWidth(), window.getHeight());
 
         //grid
         g2d.setFont(new Font(Font.DIALOG, Font.PLAIN, 15));
@@ -57,7 +57,7 @@ public class Canvas extends JPanel {
                     g2d.setColor(DARK_COLOR);
                 }
 
-                g2d.fillRect(window.toScreenX(x), window.toScreenY(y), (int) window.cellSize, (int) window.cellSize);
+                g2d.fillRect(window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize());
             }
         }
         //selected Tile
@@ -66,7 +66,7 @@ public class Canvas extends JPanel {
         if (selectedPosition != null) {
             g2d.setStroke(new BasicStroke(4));
             g2d.setColor(Color.GRAY);
-            g2d.drawOval(window.toScreenX(selectedPosition.x) + 3, window.toScreenY(selectedPosition.y) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
+            g2d.drawOval(window.toScreenX(selectedPosition.x) + 3, window.toScreenY(selectedPosition.y) + 3, (int) window.getCellSize() - 6, (int) window.getCellSize() - 6);
 
             ArrayList<Position> validMoves = window.getValidMoves();
             if (validMoves != null) {
@@ -78,7 +78,7 @@ public class Canvas extends JPanel {
                         g2d.setColor(Color.RED);
                     }
 
-                    g2d.drawOval(window.toScreenX(validMove.x) + 3, window.toScreenY(validMove.y) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
+                    g2d.drawOval(window.toScreenX(validMove.x) + 3, window.toScreenY(validMove.y) + 3, (int) window.getCellSize() - 6, (int) window.getCellSize() - 6);
                 }
             }
         }
@@ -96,13 +96,13 @@ public class Canvas extends JPanel {
 
                     for (Animation animation : window.getAnimations()) {
                         if (animation.figure.equals(figure)) {
-                            g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(animation.getX()), window.toScreenY(animation.getY()), (int) window.cellSize, (int) window.cellSize, this);
+                            g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(animation.getX()), window.toScreenY(animation.getY()), (int) window.getCellSize(), (int) window.getCellSize(), this);
 
                             continue outer;
                         }
                     }
 
-                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(x), window.toScreenY(y), (int) window.cellSize, (int) window.cellSize, this);
+                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize(), this);
                 }
             }
         }

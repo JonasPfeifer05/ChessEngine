@@ -5,6 +5,8 @@ import functional.Game;
 import util.Position;
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,11 +21,13 @@ public class Window {
     private Canvas canvas;
     public final Game game;
 
-    public final int width;
-    public final int height;
+    private int width;
+    private int height;
 
-    public final float cellSize;
-    public final float xOffSet;
+    private float cellSize;
+    private float xOffSet;
+    private float yOffSet;
+
     private final ArrayList<Animation> animations = new ArrayList<>();
 
     private Position selectedPosition;
@@ -33,8 +37,7 @@ public class Window {
         this.width = width;
         this.height = height;
 
-        cellSize = height / (float) Board.FIELDS_PER_SIDE;
-        xOffSet = (width - cellSize * Board.FIELDS_PER_SIDE) / 2;
+        computeValues();
 
         this.game = engine;
 
@@ -42,17 +45,32 @@ public class Window {
         repaintClock();
     }
 
+    private void computeValues() {
+        cellSize = Math.min(height / (float) (Board.FIELDS_PER_SIDE + 5), width / (float) (Board.FIELDS_PER_SIDE + 4));
+        xOffSet = (width - cellSize * Board.FIELDS_PER_SIDE) / 4;
+        yOffSet = (height - cellSize * Board.FIELDS_PER_SIDE) / 5;
+    }
+
     private void instantiate() {
         JFrame jFrame = new JFrame();
 
         jFrame.setTitle("Chess");
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
 
         canvas = new Canvas(this);
         jFrame.add(canvas);
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
+
+        canvas.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                width = e.getComponent().getWidth();
+                height = e.getComponent().getHeight();
+
+                computeValues();
+            }
+        });
 
         jFrame.setVisible(true);
     }
@@ -75,11 +93,11 @@ public class Window {
     }
 
     public int toScreenX(float x) {
-        return (int) (x * cellSize + xOffSet);
+        return (int) (x * cellSize + xOffSet * 2);
     }
 
     public int toScreenY(float y) {
-        return (int) (y * cellSize);
+        return (int) (y * cellSize + yOffSet * 3);
     }
 
     public Position getSelectedPosition() {
@@ -142,5 +160,17 @@ public class Window {
 
     public ArrayList<Animation> getAnimations() {
         return animations;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public float getCellSize() {
+        return cellSize;
     }
 }
