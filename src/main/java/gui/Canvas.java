@@ -72,7 +72,7 @@ public class Canvas extends JPanel {
             if (validMoves != null) {
                 for (Position validMove : validMoves) {
 
-                    if (window.engine.board.getFigure(validMove) == null) {
+                    if (window.game.engine.board.getFigure(validMove) == null) {
                         g2d.setColor(Color.green);
                     } else {
                         g2d.setColor(Color.RED);
@@ -88,7 +88,7 @@ public class Canvas extends JPanel {
             outer:
             for (int y = 0; y < Board.FIELDS_PER_SIDE; y++) {
                 if (!Board.inBound(new Position(x, y))) continue;
-                Figure figure = window.engine.board.getFigure(new Position(x, y));
+                Figure figure = window.game.engine.board.getFigure(new Position(x, y));
 
                 if (figure != null && !(figure instanceof KillLinked)) {
 

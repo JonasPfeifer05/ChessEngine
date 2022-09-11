@@ -55,4 +55,6 @@ public abstract class Figure {
 	public void actionOnRoundEnd(Board board, Position from) {}
 
 	public void kill(Board board) {}
+
+	public void move(Position from) {}
 }

@@ -8,6 +8,7 @@ import util.Position;
 import java.util.ArrayList;
 
 public class King extends PlayerIndependentFigure {
+	private boolean rochade = true;
 	public static final ArrayList<Position> moveDirections = new ArrayList<>();
 
 	static {
@@ -28,6 +29,8 @@ public class King extends PlayerIndependentFigure {
 	@Override
 	public ArrayList<Position> getConditionalMoves(Board board, Position from) {
 		ArrayList<Position> ret = new ArrayList<>();
+
+		if (!rochade) return ret;
 
 		int s = 3;
 		int l = 4;
@@ -77,6 +80,7 @@ public class King extends PlayerIndependentFigure {
 
 	@Override
 	public void actionOnConditionalMove(Board board, Position from, Position move) {
+		rochade = false;
 		if (move.x == 2) {
 			if (board.getFigure(Position.add(from, 3, 0)) instanceof Rook) {
 				board.move(Position.add(from, 3, 0), Position.add(from, 1, 0));
@@ -102,5 +106,10 @@ public class King extends PlayerIndependentFigure {
 				board.move(Position.add(from, 0, -4), Position.add(from, 0, -1));
 			}
 		}
+	}
+
+	@Override
+	public void move(Position from) {
+		rochade = false;
 	}
 }
