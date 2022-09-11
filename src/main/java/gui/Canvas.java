@@ -128,6 +128,11 @@ public class Canvas extends JPanel {
             drawFigure(g2d, killed_player4.get(i), -(int) (i / Board.FIELDS_PER_SIDE) - 1, (i % Board.FIELDS_PER_SIDE) + 3);
         }
 
+        //current player
+        g2d.setFont(new Font(Font.DIALOG, Font.PLAIN, (int) window.getCellSize()));
+        g2d.setColor(window.game.getCurrentPlayer().color);
+        g2d.drawString("current Player", window.toScreenX(4), window.toScreenY(-2));
+
     }
 
     private void drawFigure(Graphics2D g2d, Figure figure, float x, float y) {
