@@ -57,7 +57,7 @@ public class Canvas extends JPanel {
                     g2d.setColor(DARK_COLOR);
                 }
 
-                g2d.fillRect((int) (x * window.cellSize + window.xOffSet), (int) (y * window.cellSize), (int) window.cellSize, (int) window.cellSize);
+                g2d.fillRect(window.toScreenX(x), window.toScreenY(y), (int) window.cellSize, (int) window.cellSize);
             }
         }
         //selected Tile
@@ -66,7 +66,7 @@ public class Canvas extends JPanel {
         if (selectedPosition != null) {
             g2d.setStroke(new BasicStroke(4));
             g2d.setColor(Color.GRAY);
-            g2d.drawOval((int) (selectedPosition.x * window.cellSize + window.xOffSet) + 3, (int) (selectedPosition.y * window.cellSize) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
+            g2d.drawOval(window.toScreenX(selectedPosition.x) + 3, window.toScreenY(selectedPosition.y) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
 
             ArrayList<Position> validMoves = window.getValidMoves();
             if (validMoves != null) {
@@ -78,7 +78,7 @@ public class Canvas extends JPanel {
                         g2d.setColor(Color.RED);
                     }
 
-                    g2d.drawOval((int) (validMove.x * window.cellSize + window.xOffSet) + 3, (int) (validMove.y * window.cellSize) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
+                    g2d.drawOval(window.toScreenX(validMove.x) + 3, window.toScreenY(validMove.y) + 3, (int) window.cellSize - 6, (int) window.cellSize - 6);
                 }
             }
         }
@@ -96,13 +96,13 @@ public class Canvas extends JPanel {
 
                     for (Animation animation : window.getAnimations()) {
                         if (animation.figure.equals(figure)) {
-                            g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (animation.getX() * window.cellSize + window.xOffSet), (int) (animation.getY() * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
+                            g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(animation.getX()), window.toScreenY(animation.getY()), (int) window.cellSize, (int) window.cellSize, this);
 
                             continue outer;
                         }
                     }
 
-                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), (int) (x * window.cellSize + window.xOffSet), (int) (y * window.cellSize), (int) window.cellSize, (int) window.cellSize, this);
+                    g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(x), window.toScreenY(y), (int) window.cellSize, (int) window.cellSize, this);
                 }
             }
         }

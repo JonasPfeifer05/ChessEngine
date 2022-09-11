@@ -1,3 +1,5 @@
+package main;
+
 import functional.Engine;
 import functional.Game;
 import functional.figure.figures.Pawn;

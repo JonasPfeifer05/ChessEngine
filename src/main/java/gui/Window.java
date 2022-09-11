@@ -74,6 +74,14 @@ public class Window {
         return new Position(worldX, worldY);
     }
 
+    public int toScreenX(float x) {
+        return (int) (x * cellSize + xOffSet);
+    }
+
+    public int toScreenY(float y) {
+        return (int) (y * cellSize);
+    }
+
     public Position getSelectedPosition() {
         return selectedPosition;
     }
@@ -100,7 +108,7 @@ public class Window {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
-                    animations.add(new Animation(game.engine.board.getFigure(selectedPosition),selectedPosition, validMove));
+                    animations.add(new Animation(game.engine.board.getFigure(selectedPosition), selectedPosition, validMove));
                     game.move(selectedPosition, validMove);
 
                     validMoves = null;
