@@ -86,8 +86,8 @@ public class Window {
     }
 
     public Position screenToWorldCords(int x, int y) {
-        int worldX = (int) ((x - xOffSet) / cellSize);
-        int worldY = (int) (y / cellSize);
+        int worldX = (int) ((x - xOffSet * 2) / cellSize);
+        int worldY = (int) ((y - yOffSet * 3) / cellSize);
 
         return new Position(worldX, worldY);
     }
