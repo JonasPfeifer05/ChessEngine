@@ -1,8 +1,7 @@
-import functional.Engine;
+package main;
+
 import functional.Game;
-import functional.figure.figures.Pawn;
-import functional.figure.figures.Rook;
-import functional.figure.special.KillLinked;
+import functional.figure.figures.Queen;
 import gui.Window;
 import util.Asset;
 import util.Player;
@@ -15,14 +14,13 @@ public class Main {
         System.out.println("Huff ist immer noch dumm!");
         System.out.println("Hello World");
 
-        Game game = new Game(4);
+        Game game = new Game(4, false);
 
-        game.engine.move(new Position(7,12), new Position(7,10));
-        game.engine.move(new Position(1,6), new Position(3,6));
+        game.engine.board.set(new Position(7, 1), null);
 
-        game.move(new Position(5, 1), new Position(5, 2));
+        game.engine.board.set(new Position(7, 2), new Queen(Player.PLAYER4));
 
-        game.getAllValidMoves(new Position(7, 13));
+        game.move(new Position(8,1), new Position(8,2));
 
         Asset.setUp();
         new Window(480 / 9 * 16, 480, game);
