@@ -24,6 +24,8 @@ public class Board {
 	public final ArrayList<Figure> killed_Player3 = new ArrayList<>();
 	public final ArrayList<Figure> killed_Player4 = new ArrayList<>();
 
+	private final Figure[][] boardSave;
+
 	/*
 	 * Access via [x][y]
 	 */
@@ -31,6 +33,7 @@ public class Board {
 
 	public Board(int players) {
 		board = new Figure[FIELDS_PER_SIDE][FIELDS_PER_SIDE];
+		boardSave = new Figure[FIELDS_PER_SIDE][FIELDS_PER_SIDE];
 
 		setUp(players);
 	}
@@ -61,6 +64,7 @@ public class Board {
 			board[12][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER3);
 		}
 
+
 		board[FIELDS_PER_CORNER_SIDE][0] = new Rook(Player.PLAYER1);
 		board[1 + FIELDS_PER_CORNER_SIDE][0] = new Knight(Player.PLAYER1);
 		board[2 + FIELDS_PER_CORNER_SIDE][0] = new Bishop(Player.PLAYER1);
@@ -74,10 +78,11 @@ public class Board {
 		board[1 + FIELDS_PER_CORNER_SIDE][13] = new Knight(Player.PLAYER2);
 		board[2 + FIELDS_PER_CORNER_SIDE][13] = new Bishop(Player.PLAYER2);
 		board[3 + FIELDS_PER_CORNER_SIDE][13] = new Queen(Player.PLAYER2);
-		board[4 + FIELDS_PER_CORNER_SIDE][13] = new King(Player.PLAYER2);
 		board[5 + FIELDS_PER_CORNER_SIDE][13] = new Bishop(Player.PLAYER2);
 		board[6 + FIELDS_PER_CORNER_SIDE][13] = new Knight(Player.PLAYER2);
 		board[7 + FIELDS_PER_CORNER_SIDE][13] = new Rook(Player.PLAYER2);
+		board[4 + FIELDS_PER_CORNER_SIDE][13] = new King(Player.PLAYER2);
+
 
 		if (players >= 4) {
 			board[0][FIELDS_PER_CORNER_SIDE] = new Rook(Player.PLAYER4);
@@ -213,6 +218,18 @@ public class Board {
 		moves.add(new DoubleSet<>(from, to));
 	}
 
+	public void saveArr() {
+		for (int i = 0; i < board.length; i++) {
+			System.arraycopy(board[i], 0, boardSave[i], 0, board[i].length);
+		}
+	}
+
+	public void loadArr() {
+		for (int i = 0; i < boardSave.length; i++) {
+			System.arraycopy(boardSave[i], 0, board[i], 0, boardSave[i].length);
+		}
+	}
+
 	public ArrayList<Figure> getAllFigures() {
 		ArrayList<Figure> figs = new ArrayList<>();
 
@@ -252,10 +269,7 @@ public class Board {
 	public boolean figureAt(Position from) {
 		if (getFigure(from) == null) return false;
 
-		if (getFigure(from) instanceof PlayerDependentFigure || getFigure(from) instanceof PlayerIndependentFigure)
-			return true;
-
-		return false;
+		return getFigure(from) instanceof PlayerDependentFigure || getFigure(from) instanceof PlayerIndependentFigure;
 	}
 
 	public void onRoundStart() {
