@@ -110,29 +110,29 @@ public class Canvas extends JPanel {
         //dead pieces
         ArrayList<Figure> killed_player1 = window.game.engine.board.killed_Player1;
         for (int i = 0; i < killed_player1.size(); i++) {
-            drawFigure(g2d, killed_player1.get(i), (i % Board.FIELDS_PER_SIDE) + 3, -(int) (i / Board.FIELDS_PER_SIDE) - 1);
+            drawFigure(g2d, killed_player1.get(i), (i % (Board.FIELDS_PER_SIDE - 6)) + 3, -(int) (i / (Board.FIELDS_PER_SIDE - 6)) - 1);
         }
 
         ArrayList<Figure> killed_player2 = window.game.engine.board.killed_Player2;
         for (int i = 0; i < killed_player2.size(); i++) {
-            drawFigure(g2d, killed_player2.get(i), (i % Board.FIELDS_PER_SIDE) + 3, Board.FIELDS_PER_SIDE + (int) (i / Board.FIELDS_PER_SIDE));
+            drawFigure(g2d, killed_player2.get(i), (i % (Board.FIELDS_PER_SIDE - 6)) + 3, Board.FIELDS_PER_SIDE + (int) (i / (Board.FIELDS_PER_SIDE - 6)));
         }
 
         ArrayList<Figure> killed_player3 = window.game.engine.board.killed_Player3;
         for (int i = 0; i < killed_player3.size(); i++) {
-            drawFigure(g2d, killed_player3.get(i), (int) (i / Board.FIELDS_PER_SIDE) + Board.FIELDS_PER_SIDE, (i % Board.FIELDS_PER_SIDE) + 3);
+            drawFigure(g2d, killed_player3.get(i), (int) (i / (Board.FIELDS_PER_SIDE - 6)) + Board.FIELDS_PER_SIDE, (i % (Board.FIELDS_PER_SIDE - 6)) + 3);
         }
 
         ArrayList<Figure> killed_player4 = window.game.engine.board.killed_Player4;
         for (int i = 0; i < killed_player4.size(); i++) {
-            drawFigure(g2d, killed_player4.get(i), -(int) (i / Board.FIELDS_PER_SIDE) - 1, (i % Board.FIELDS_PER_SIDE) + 3);
+            drawFigure(g2d, killed_player4.get(i), -(int) (i / (Board.FIELDS_PER_SIDE - 6)) - 1, (i % (Board.FIELDS_PER_SIDE - 6)) + 3);
         }
 
         //current player
         g2d.setFont(new Font(Font.DIALOG, Font.PLAIN, (int) (window.getCellSize() * 0.6)));
         g2d.setColor(window.game.getCurrentPlayer().color);
         g2d.drawString("Current Color: ", window.toScreenX(5), window.toScreenY(-2));
-        g2d.fillRect(window.toScreenX(9) - (int) (window.getCellSize() * 0.6 / 2), window.toScreenY(-2) - (int) (window.getCellSize() * 0.5), (int) (window.getCellSize() * 0.6), (int)(window.getCellSize() * 0.6));
+        g2d.fillRect(window.toScreenX(9) - (int) (window.getCellSize() * 0.6 / 2), window.toScreenY(-2) - (int) (window.getCellSize() * 0.5), (int) (window.getCellSize() * 0.6), (int) (window.getCellSize() * 0.6));
 
     }
 
