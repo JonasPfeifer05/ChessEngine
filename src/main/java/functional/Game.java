@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Game {
 	private int currentPlayerIndex = 0;
 	public final Engine engine;
+	public final int playerCount;
 
 	public final boolean inOrder;
 
@@ -29,6 +30,7 @@ public class Game {
 	public Game(int playerCount, boolean inOrder) {
 		this.engine = new Engine(playerCount);
 		this.inOrder = inOrder;
+		this.playerCount = playerCount;
 	}
 
 	public Player getCurrentPlayer() {
@@ -130,7 +132,7 @@ public class Game {
 
 	private void nextPlayer() {
 		currentPlayerIndex++;
-		currentPlayerIndex %= 4;
+		currentPlayerIndex %= playerCount;
 		if (!isAlive(getCurrentPlayer())) nextPlayer();
 	}
 
