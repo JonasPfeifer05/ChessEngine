@@ -229,9 +229,12 @@ public class Game {
 		engine.move(from, to);
 		engine.board.onRoundEnd();
 
+		killUnableToMovePlayer();
+		if (king instanceof King) {
+			setAlive(king.getPlayer(), false);
+		}
 		nextPlayer();
 		System.out.println(getCurrentPlayer());
-		killUnableToMovePlayer();
 
 		Player current = getCurrentPlayer();
 		System.out.println(String.format("""
@@ -244,8 +247,5 @@ public class Game {
 
 
 
-		if (king instanceof King) {
-			setAlive(king.getPlayer(), false);
-		}
 	}
 }
