@@ -14,6 +14,8 @@ public abstract class Figure {
 	private final int maxMoveDistance;
 	private final int maxAttackDistance;
 
+	private boolean dead;
+
 	public Figure(Player player, int maxMoveDistance, int maxAttackDistance) {
 		this.player = player;
 		this.maxMoveDistance = maxMoveDistance;
