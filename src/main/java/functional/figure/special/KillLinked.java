@@ -18,12 +18,18 @@ public class KillLinked extends Figure {
 	private Position pos;
 	private Position pawn;
 
-	private int roundCount = 4;
+	private static int roundCountStart;
+
+	private int roundCount = roundCountStart;
 
 	public KillLinked(Player player, Position pos, Position pawn) {
 		super(player, 0, 0);
 		this.pos = pos;
 		this.pawn = pawn;
+	}
+
+	public static void setRoundCount(int count) {
+		roundCountStart = count;
 	}
 
 	@Override

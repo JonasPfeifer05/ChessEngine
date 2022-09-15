@@ -2,6 +2,7 @@ package functional;
 
 import functional.figure.Figure;
 import functional.figure.figures.King;
+import functional.figure.special.KillLinked;
 import util.Player;
 import util.Position;
 import util.exceptions.InvalidMoveException;
@@ -28,6 +29,8 @@ public class Game {
 	}
 
 	public Game(int playerCount, boolean inOrder) {
+		KillLinked.setRoundCount(playerCount-1);
+
 		this.engine = new Engine(playerCount);
 		this.inOrder = inOrder;
 		this.playerCount = playerCount;
