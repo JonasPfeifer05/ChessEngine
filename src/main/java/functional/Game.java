@@ -163,7 +163,7 @@ public class Game {
 
 			for (Position validMove : validMoves) {
 				Position abs = Position.add(validMove, from);
-				engine.board.saveArr();
+				engine.board.saveState();
 				//Figure save = engine.board.getFigure(abs);
 				engine.board.move(from, abs);
 
@@ -171,7 +171,7 @@ public class Game {
 					invalid.add(validMove);
 				}
 
-				engine.board.loadArr();
+				engine.board.loadState();
 				//engine.board.move(abs, from);
 				//engine.board.set(abs, save);
 			}
