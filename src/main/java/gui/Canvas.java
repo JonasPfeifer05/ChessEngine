@@ -136,7 +136,7 @@ public class Canvas extends JPanel {
     }
 
     private void drawFigure(Graphics2D g2d, Figure figure, float x, float y) {
-        g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure)), window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize(), this);
+        g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure), window.game), window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize(), this);
     }
 
     private int getFigureId(Figure figure) {

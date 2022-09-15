@@ -1,5 +1,7 @@
 package util;
 
+import functional.Game;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,14 +26,15 @@ public class Asset {
     private static final BufferedImage[] spritesPlayer2 = new BufferedImage[PIECE_COUNT];
     private static final BufferedImage[] spritesPlayer3 = new BufferedImage[PIECE_COUNT];
     private static final BufferedImage[] spritesPlayer4 = new BufferedImage[PIECE_COUNT];
+    private static final BufferedImage[] spritesPlayerDead = new BufferedImage[PIECE_COUNT];
 
     public static File getFile(String name) {
         File file;
 
-        file = new File(RUN_PATH+name);
+        file = new File(RUN_PATH + name);
         if (file.exists()) return file;
 
-        file = new File(JAR_PATH+name);
+        file = new File(JAR_PATH + name);
 
         return file;
     }
@@ -50,12 +53,18 @@ public class Asset {
             spritesPlayer2[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
             spritesPlayer3[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
             spritesPlayer4[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
+            spritesPlayerDead[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
         }
 
         updateColor();
     }
 
-    public static BufferedImage getSprite(Player player, int id) {
+    public static BufferedImage getSprite(Player player, int id, Game game) {
+
+        if (!game.isAlive(player)) {
+            return spritesPlayerDead[id];
+        }
+
         switch (player) {
             case PLAYER1 -> {
                 return spritesPlayer1[id];
@@ -80,6 +89,7 @@ public class Asset {
             spritesPlayer2[i] = updateColor(spritesPlayer2[i], Player.PLAYER2.color);
             spritesPlayer3[i] = updateColor(spritesPlayer3[i], Player.PLAYER3.color);
             spritesPlayer4[i] = updateColor(spritesPlayer4[i], Player.PLAYER4.color);
+            spritesPlayerDead[i] = updateColor(spritesPlayerDead[i], Color.GRAY);
         }
     }
 
