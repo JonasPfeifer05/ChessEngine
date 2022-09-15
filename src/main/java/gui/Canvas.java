@@ -129,9 +129,10 @@ public class Canvas extends JPanel {
         }
 
         //current player
-        g2d.setFont(new Font(Font.DIALOG, Font.PLAIN, (int) window.getCellSize()));
+        g2d.setFont(new Font(Font.DIALOG, Font.PLAIN, (int) (window.getCellSize() * 0.6)));
         g2d.setColor(window.game.getCurrentPlayer().color);
-        g2d.drawString("current Player", window.toScreenX(4), window.toScreenY(-2));
+        g2d.drawString("Current Color: ", window.toScreenX(5), window.toScreenY(-2));
+        g2d.fillRect(window.toScreenX(9) - (int) (window.getCellSize() * 0.6 / 2), window.toScreenY(-2) - (int) (window.getCellSize() * 0.5), (int) (window.getCellSize() * 0.6), (int)(window.getCellSize() * 0.6));
 
     }
 
