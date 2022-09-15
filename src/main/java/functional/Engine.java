@@ -5,7 +5,6 @@ import functional.figure.special.KillLinked;
 import util.exceptions.InvalidMoveException;
 import util.Position;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Engine {
@@ -77,7 +76,7 @@ public class Engine {
         return validMoves;
     }
 
-    public ArrayList<Position> getAllValidAttacksAbsKing(Position from) {
+    public ArrayList<Position> getAllValidAttacksAbs(Position from) {
         if (!Board.inBound(from)) return new ArrayList<>();
 
         if (!board.figureAt(from)) return new ArrayList<>();
