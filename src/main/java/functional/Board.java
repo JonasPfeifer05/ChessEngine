@@ -60,8 +60,8 @@ public class Board {
 		for (int i = 0; i < FIELDS_PER_SIDE - 2 * FIELDS_PER_CORNER_SIDE; i++) {
 			board[i + FIELDS_PER_CORNER_SIDE][1] = new Pawn(Player.PLAYER1);
 			board[i + FIELDS_PER_CORNER_SIDE][12] = new Pawn(Player.PLAYER2);
-			board[1][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER4);
-			board[12][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER3);
+			if (players >= 4) board[1][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER4);
+			if (players >= 3) board[12][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER3);
 		}
 
 

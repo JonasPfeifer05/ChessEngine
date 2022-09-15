@@ -2,6 +2,7 @@ package functional;
 
 import functional.figure.Figure;
 import functional.figure.figures.King;
+import functional.figure.special.KillLinked;
 import util.Player;
 import util.Position;
 import util.exceptions.InvalidMoveException;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class Game {
 	private int currentPlayerIndex = 0;
 	public final Engine engine;
+	public final int playerCount;
 
 	public final boolean inOrder;
 
@@ -27,10 +29,11 @@ public class Game {
 	}
 
 	public Game(int playerCount, boolean inOrder) {
+		KillLinked.setRoundCount(playerCount-1);
+
 		this.engine = new Engine(playerCount);
 		this.inOrder = inOrder;
-
-
+		this.playerCount = playerCount;
 	}
 
 	public Player getCurrentPlayer() {
@@ -132,7 +135,7 @@ public class Game {
 
 	private void nextPlayer() {
 		currentPlayerIndex++;
-		currentPlayerIndex %= 4;
+		currentPlayerIndex %= playerCount;
 		if (!isAlive(getCurrentPlayer())) nextPlayer();
 	}
 
