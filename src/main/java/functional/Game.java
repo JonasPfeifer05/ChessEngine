@@ -29,8 +29,6 @@ public class Game {
 	public Game(int playerCount, boolean inOrder) {
 		this.engine = new Engine(playerCount);
 		this.inOrder = inOrder;
-
-
 	}
 
 	public Player getCurrentPlayer() {

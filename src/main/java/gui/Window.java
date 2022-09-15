@@ -107,7 +107,7 @@ public class Window {
 
     public void setSelectedPosition(Position selectedPosition) {
         Figure figure = game.engine.board.getFigure(selectedPosition);
-        if (figure == null || figure.getPlayer() != game.getCurrentPlayer()) return;
+        if (figure == null || (figure.getPlayer() != game.getCurrentPlayer() && game.inOrder)) return;
 
         this.selectedPosition = selectedPosition;
 
