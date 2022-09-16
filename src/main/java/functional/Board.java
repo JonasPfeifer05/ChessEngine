@@ -203,7 +203,7 @@ public class Board {
 		if (getFigure(to) != null) {
 			Figure fig = getFigure(to);
 			fig.kill(this);
-			switch (fig.getPlayer()) {
+			switch (getPlayer(from)) {
 
 				case PLAYER1 -> {
 					killedPlayer1.add(fig);
