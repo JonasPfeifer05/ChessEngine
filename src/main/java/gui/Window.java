@@ -2,9 +2,12 @@ package gui;
 
 import functional.Board;
 import functional.Game;
+import functional.figure.Figure;
 import util.Position;
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,11 +22,13 @@ public class Window {
     private Canvas canvas;
     public final Game game;
 
-    public final int width;
-    public final int height;
+    private int width;
+    private int height;
 
-    public final float cellSize;
-    public final float xOffSet;
+    private float cellSize;
+    private float xOffSet;
+    private float yOffSet;
+
     private final ArrayList<Animation> animations = new ArrayList<>();
 
     private Position selectedPosition;
@@ -33,8 +38,7 @@ public class Window {
         this.width = width;
         this.height = height;
 
-        cellSize = height / (float) Board.FIELDS_PER_SIDE;
-        xOffSet = (width - cellSize * Board.FIELDS_PER_SIDE) / 2;
+        computeValues();
 
         this.game = engine;
 
@@ -42,17 +46,32 @@ public class Window {
         repaintClock();
     }
 
+    private void computeValues() {
+        cellSize = Math.min(height / (float) (Board.FIELDS_PER_SIDE + 5), width / (float) (Board.FIELDS_PER_SIDE + 4));
+        xOffSet = (width - cellSize * Board.FIELDS_PER_SIDE) / 4;
+        yOffSet = (height - cellSize * Board.FIELDS_PER_SIDE) / 5;
+    }
+
     private void instantiate() {
         JFrame jFrame = new JFrame();
 
         jFrame.setTitle("Chess");
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
 
         canvas = new Canvas(this);
         jFrame.add(canvas);
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
+
+        canvas.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                width = e.getComponent().getWidth();
+                height = e.getComponent().getHeight();
+
+                computeValues();
+            }
+        });
 
         jFrame.setVisible(true);
     }
@@ -68,16 +87,18 @@ public class Window {
     }
 
     public Position screenToWorldCords(int x, int y) {
-        int worldX = (int) ((x - xOffSet) / cellSize);
-        int worldY = (int) (y / cellSize);
+        int worldX = (int) ((x - xOffSet * 2) / cellSize);
+        int worldY = (int) ((y - yOffSet * 3) / cellSize);
 
-        if (worldX >= 0 && worldX < Board.FIELDS_PER_SIDE && worldY >= 0 && worldY < Board.FIELDS_PER_SIDE) {
-            Position position = new Position(worldX, worldY);
+        return new Position(worldX, worldY);
+    }
 
-            if (Board.inBound(position)) return position;
-        }
+    public int toScreenX(float x) {
+        return (int) (x * cellSize + xOffSet * 2);
+    }
 
-        return null;
+    public int toScreenY(float y) {
+        return (int) (y * cellSize + yOffSet * 3);
     }
 
     public Position getSelectedPosition() {
@@ -85,7 +106,8 @@ public class Window {
     }
 
     public void setSelectedPosition(Position selectedPosition) {
-        if (game.engine.board.getFigure(selectedPosition) == null) return;
+        Figure figure = game.engine.board.getFigure(selectedPosition);
+        if (figure == null || (figure.getPlayer() != game.getCurrentPlayer() && game.inOrder) || !game.isAlive(figure.getPlayer())) return;
 
         this.selectedPosition = selectedPosition;
 
@@ -99,11 +121,14 @@ public class Window {
     }
 
     public void manageClick(Position position) {
+
+        if (!Board.inBound(position)) return;
+
         if (validMoves != null) {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
-                    animations.add(new Animation(game.engine.board.getFigure(selectedPosition),selectedPosition, validMove));
+                    animations.add(new Animation(game.engine.board.getFigure(selectedPosition), selectedPosition, validMove));
                     game.move(selectedPosition, validMove);
 
                     validMoves = null;
@@ -137,5 +162,17 @@ public class Window {
 
     public ArrayList<Animation> getAnimations() {
         return animations;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public float getCellSize() {
+        return cellSize;
     }
 }

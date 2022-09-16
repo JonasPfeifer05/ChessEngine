@@ -9,11 +9,16 @@ import java.awt.*;
  */
 
 public enum Player {
-	PLAYER1(Color.RED), PLAYER2(Color.ORANGE), PLAYER3(Color.BLUE), PLAYER4(Color.GREEN);
+    PLAYER1(Color.RED), PLAYER2(Color.ORANGE), PLAYER3(Color.BLUE), PLAYER4(Color.GREEN);
 
-	public final Color color;
+    public final Color color;
+    public final Color deadColor;
 
-	Player(Color color) {
-		this.color = color;
-	}
+    Player(Color color) {
+        this.color = color;
+
+        int avg = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
+
+        this.deadColor = new Color((color.getRed() + avg * 5) / 6, (color.getGreen() + avg * 5) / 6, (color.getBlue() + avg * 5) / 6, 255);
+    }
 }

@@ -1,5 +1,7 @@
 package util;
 
+import functional.Game;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,18 +22,16 @@ public class Asset {
     public static final int SPRITE_SIZE = 45;
 
 
-    private static final BufferedImage[] spritesPlayer1 = new BufferedImage[PIECE_COUNT];
-    private static final BufferedImage[] spritesPlayer2 = new BufferedImage[PIECE_COUNT];
-    private static final BufferedImage[] spritesPlayer3 = new BufferedImage[PIECE_COUNT];
-    private static final BufferedImage[] spritesPlayer4 = new BufferedImage[PIECE_COUNT];
+    private static final BufferedImage[][] spritesPlayer = new BufferedImage[4][PIECE_COUNT];
+    private static final BufferedImage[][] spritesPlayerDead = new BufferedImage[4][PIECE_COUNT];
 
     public static File getFile(String name) {
         File file;
 
-        file = new File(RUN_PATH+name);
+        file = new File(RUN_PATH + name);
         if (file.exists()) return file;
 
-        file = new File(JAR_PATH+name);
+        file = new File(JAR_PATH + name);
 
         return file;
     }
@@ -46,28 +46,46 @@ public class Asset {
         }
 
         for (int i = 0; i < PIECE_COUNT; i++) {
-            spritesPlayer1[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
-            spritesPlayer2[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
-            spritesPlayer3[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
-            spritesPlayer4[i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
+            for (int j = 0; j < spritesPlayer.length; j++) {
+                spritesPlayer[j][i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
+                spritesPlayerDead[j][i] = img.getSubimage(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
+            }
         }
 
         updateColor();
     }
 
-    public static BufferedImage getSprite(Player player, int id) {
+    public static BufferedImage getSprite(Player player, int id, Game game) {
+
+
         switch (player) {
             case PLAYER1 -> {
-                return spritesPlayer1[id];
+                if (!game.isAlive(player)) {
+                    return spritesPlayerDead[0][id];
+                } else {
+                    return spritesPlayer[0][id];
+                }
             }
             case PLAYER2 -> {
-                return spritesPlayer2[id];
+                if (!game.isAlive(player)) {
+                    return spritesPlayerDead[1][id];
+                } else {
+                    return spritesPlayer[1][id];
+                }
             }
             case PLAYER3 -> {
-                return spritesPlayer3[id];
+                if (!game.isAlive(player)) {
+                    return spritesPlayerDead[2][id];
+                } else {
+                    return spritesPlayer[2][id];
+                }
             }
             case PLAYER4 -> {
-                return spritesPlayer4[id];
+                if (!game.isAlive(player)) {
+                    return spritesPlayerDead[3][id];
+                } else {
+                    return spritesPlayer[3][id];
+                }
             }
         }
 
@@ -75,11 +93,16 @@ public class Asset {
     }
 
     public static void updateColor() {
-        for (int i = 0; i < spritesPlayer1.length; i++) {
-            spritesPlayer1[i] = updateColor(spritesPlayer1[i], Player.PLAYER1.color);
-            spritesPlayer2[i] = updateColor(spritesPlayer2[i], Player.PLAYER2.color);
-            spritesPlayer3[i] = updateColor(spritesPlayer3[i], Player.PLAYER3.color);
-            spritesPlayer4[i] = updateColor(spritesPlayer4[i], Player.PLAYER4.color);
+
+        for (int i = 0; i < spritesPlayer[0].length; i++) {
+            spritesPlayer[0][i] = updateColor(spritesPlayer[0][i], Player.PLAYER1.color);
+            spritesPlayer[1][i] = updateColor(spritesPlayer[1][i], Player.PLAYER2.color);
+            spritesPlayer[2][i] = updateColor(spritesPlayer[2][i], Player.PLAYER3.color);
+            spritesPlayer[3][i] = updateColor(spritesPlayer[3][i], Player.PLAYER4.color);
+            spritesPlayerDead[0][i] = updateColor(spritesPlayerDead[0][i], Player.PLAYER1.deadColor);
+            spritesPlayerDead[1][i] = updateColor(spritesPlayerDead[1][i], Player.PLAYER2.deadColor);
+            spritesPlayerDead[2][i] = updateColor(spritesPlayerDead[2][i], Player.PLAYER3.deadColor);
+            spritesPlayerDead[3][i] = updateColor(spritesPlayerDead[3][i], Player.PLAYER4.deadColor);
         }
     }
 
