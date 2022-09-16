@@ -109,10 +109,10 @@ public class Game {
 
         Position king = getKing(player);
 
-        ArrayList<Position> allValidMoves = getAllValidMoves(king);
+        ArrayList<Position> allValidMoves = getAllValidMoves(king, false);
         for (Position fig : engine.board.getAllPositions()) {
             if (engine.board.getPlayer(fig) != player) continue;
-            allValidMoves.addAll(getAllValidMoves(fig));
+            allValidMoves.addAll(getAllValidMoves(fig, false));
         }
         allValidMoves.removeAll(getAllAttacksExceptFromPlayer(player));
         return allValidMoves.size() == 0;
@@ -125,7 +125,7 @@ public class Game {
         for (Position allPosition : engine.board.getAllPositions()) {
             if (engine.board.getPlayer(allPosition) != player) continue;
 
-            if (getAllValidMoves(allPosition).size() > 0) {
+            if (getAllValidMoves(allPosition, false).size() > 0) {
                 return false;
             }
         }
@@ -147,8 +147,11 @@ public class Game {
 	}
 
     public ArrayList<Position> getAllValidMoves(Position from) {
+        return getAllValidMoves(from, true);
+    }
+    public ArrayList<Position> getAllValidMoves(Position from, boolean playerChecking) {
         if (!isAlive(engine.board.getPlayer(from))) return new ArrayList<>();
-        if (inOrder) {
+        if (inOrder && playerChecking) {
             if (engine.board.getFigure(from).getPlayer() != getCurrentPlayer()) return new ArrayList<>();
         }
 
