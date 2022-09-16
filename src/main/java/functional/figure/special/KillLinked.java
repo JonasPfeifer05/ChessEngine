@@ -18,12 +18,18 @@ public class KillLinked extends Figure {
 	private Position pos;
 	private Position pawn;
 
-	private int roundCount = 4;
+	private static int roundCountStart;
+
+	private int roundCount = roundCountStart;
 
 	public KillLinked(Player player, Position pos, Position pawn) {
 		super(player, 0, 0);
 		this.pos = pos;
 		this.pawn = pawn;
+	}
+
+	public static void setRoundCount(int count) {
+		roundCountStart = count;
 	}
 
 	@Override
@@ -37,7 +43,7 @@ public class KillLinked extends Figure {
 	}
 
 	@Override
-	public void actionOnRoundStart(Board board, Position from) {
+	public void actionOnRoundEnd(Board board, Position from) {
 		roundCount--;
 		if (roundCount <= 0) board.set(pos, null);
 	}

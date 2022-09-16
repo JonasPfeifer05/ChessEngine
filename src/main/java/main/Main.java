@@ -11,7 +11,7 @@ public class Main {
         System.out.println("Huff ist immer noch dumm!");
         System.out.println("Hello World");
 
-        Game game = new Game(4, false);
+        Game game = new Game(2, false);
 
         Asset.setUp();
         new Window(480 / 9 * 16, 480, game);

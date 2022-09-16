@@ -17,12 +17,19 @@ public class Board {
 
 	public static final int FIELDS_PER_CORNER_SIDE = 3;
 
-	public final ArrayList<DoubleSet<Position, Position>> moves = new ArrayList<>();
+	public ArrayList<DoubleSet<Position, Position>> moves = new ArrayList<>();
 
-	public final ArrayList<Figure> killed_Player1 = new ArrayList<>();
-	public final ArrayList<Figure> killed_Player2 = new ArrayList<>();
-	public final ArrayList<Figure> killed_Player3 = new ArrayList<>();
-	public final ArrayList<Figure> killed_Player4 = new ArrayList<>();
+	public ArrayList<Figure> killedPlayer1 = new ArrayList<>();
+	public ArrayList<Figure> killedPlayer2 = new ArrayList<>();
+	public ArrayList<Figure> killedPlayer3 = new ArrayList<>();
+	public ArrayList<Figure> killedPlayer4 = new ArrayList<>();
+
+	public ArrayList<DoubleSet<Position, Position>> movesSave = new ArrayList<>();
+
+	public ArrayList<Figure> killedPlayer1Save = new ArrayList<>();
+	public ArrayList<Figure> killedPlayer2Save = new ArrayList<>();
+	public ArrayList<Figure> killedPlayer3Save = new ArrayList<>();
+	public ArrayList<Figure> killedPlayer4Save = new ArrayList<>();
 
 	private final Figure[][] boardSave;
 
@@ -60,8 +67,8 @@ public class Board {
 		for (int i = 0; i < FIELDS_PER_SIDE - 2 * FIELDS_PER_CORNER_SIDE; i++) {
 			board[i + FIELDS_PER_CORNER_SIDE][1] = new Pawn(Player.PLAYER1);
 			board[i + FIELDS_PER_CORNER_SIDE][12] = new Pawn(Player.PLAYER2);
-			board[1][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER4);
-			board[12][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER3);
+			if (players >= 4) board[1][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER4);
+			if (players >= 3) board[12][i + FIELDS_PER_CORNER_SIDE] = new Pawn(Player.PLAYER3);
 		}
 
 
@@ -177,16 +184,16 @@ public class Board {
 	public ArrayList<Figure> getKilled(Player player) {
 		switch (player) {
 			case PLAYER1 -> {
-				return killed_Player1;
+				return killedPlayer1;
 			}
 			case PLAYER2 -> {
-				return killed_Player2;
+				return killedPlayer2;
 			}
 			case PLAYER3 -> {
-				return killed_Player3;
+				return killedPlayer3;
 			}
 			case PLAYER4 -> {
-				return killed_Player4;
+				return killedPlayer4;
 			}
 		}
 		throw new IllegalArgumentException("Invalid player");
@@ -196,19 +203,19 @@ public class Board {
 		if (getFigure(to) != null) {
 			Figure fig = getFigure(to);
 			fig.kill(this);
-			switch (fig.getPlayer()) {
+			switch (getPlayer(from)) {
 
 				case PLAYER1 -> {
-					killed_Player1.add(fig);
+					killedPlayer1.add(fig);
 				}
 				case PLAYER2 -> {
-					killed_Player2.add(fig);
+					killedPlayer2.add(fig);
 				}
 				case PLAYER3 -> {
-					killed_Player3.add(fig);
+					killedPlayer3.add(fig);
 				}
 				case PLAYER4 -> {
-					killed_Player4.add(fig);
+					killedPlayer4.add(fig);
 				}
 			}
 
@@ -218,16 +225,31 @@ public class Board {
 		moves.add(new DoubleSet<>(from, to));
 	}
 
-	public void saveArr() {
+	public void saveState() {
 		for (int i = 0; i < board.length; i++) {
 			System.arraycopy(board[i], 0, boardSave[i], 0, board[i].length);
 		}
+
+		killedPlayer1Save = new ArrayList<>(killedPlayer1);
+		killedPlayer2Save = new ArrayList<>(killedPlayer2);
+		killedPlayer3Save = new ArrayList<>(killedPlayer3);
+		killedPlayer4Save = new ArrayList<>(killedPlayer4);
+
+
+		movesSave = new ArrayList<>(moves);
 	}
 
-	public void loadArr() {
+	public void loadState() {
 		for (int i = 0; i < boardSave.length; i++) {
 			System.arraycopy(boardSave[i], 0, board[i], 0, boardSave[i].length);
 		}
+
+		killedPlayer1 = killedPlayer1Save;
+		killedPlayer2 = killedPlayer2Save;
+		killedPlayer3 = killedPlayer3Save;
+		killedPlayer4 = killedPlayer4Save;
+
+		moves = movesSave;
 	}
 
 	public ArrayList<Figure> getAllFigures() {
