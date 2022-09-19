@@ -18,14 +18,14 @@ import java.util.ArrayList;
  * @author Tobias Frischmann
  */
 
-public class Canvas extends JPanel {
+public class GameCanvas extends JPanel {
     private final Window window;
 
     private final Color BG_COLOR = Color.decode("#515870");
     private final Color DARK_COLOR = Color.decode("#262638");
     private final Color LIGHT_COLOR = Color.decode("#e8f3ff");
 
-    public Canvas(Window window) {
+    public GameCanvas(Window window) {
         this.window = window;
         setPreferredSize(new Dimension(window.getWidth(), window.getHeight()));
 
@@ -62,9 +62,9 @@ public class Canvas extends JPanel {
         }
         //selected Tile
         Position selectedPosition = window.getSelectedPosition();
+        g2d.setStroke(new BasicStroke(4));
 
         if (selectedPosition != null) {
-            g2d.setStroke(new BasicStroke(4));
             g2d.setColor(Color.GRAY);
             g2d.drawOval(window.toScreenX(selectedPosition.x) + 3, window.toScreenY(selectedPosition.y) + 3, (int) window.getCellSize() - 6, (int) window.getCellSize() - 6);
 
@@ -72,7 +72,7 @@ public class Canvas extends JPanel {
             if (validMoves != null) {
                 for (Position validMove : validMoves) {
 
-                    if (window.game.engine.board.getFigure(validMove) == null) {
+                    if (window.getGame().engine.board.getFigure(validMove) == null) {
                         g2d.setColor(Color.green);
                     } else {
                         g2d.setColor(Color.RED);
@@ -83,12 +83,19 @@ public class Canvas extends JPanel {
             }
         }
 
+        if (window.getGame().lookCheck(window.getGame().getCurrentPlayer())) {
+            g2d.setColor(Color.RED);
+            Position king = window.getGame().getKing(window.getGame().getCurrentPlayer());
+
+            g2d.drawOval(window.toScreenX(king.x) + 3, window.toScreenY(king.y) + 3, (int) window.getCellSize() - 6, (int) window.getCellSize() - 6);
+        }
+
         //pieces
         for (int x = 0; x < Board.FIELDS_PER_SIDE; x++) {
             outer:
             for (int y = 0; y < Board.FIELDS_PER_SIDE; y++) {
                 if (!Board.inBound(new Position(x, y))) continue;
-                Figure figure = window.game.engine.board.getFigure(new Position(x, y));
+                Figure figure = window.getGame().engine.board.getFigure(new Position(x, y));
 
                 if (figure != null && !(figure instanceof KillLinked)) {
 
@@ -108,36 +115,35 @@ public class Canvas extends JPanel {
         }
 
         //dead pieces
-        ArrayList<Figure> killed_player1 = window.game.engine.board.killedPlayer1;
+        ArrayList<Figure> killed_player1 = window.getGame().engine.board.killedPlayer1;
         for (int i = 0; i < killed_player1.size(); i++) {
             drawFigure(g2d, killed_player1.get(i), (i % (Board.FIELDS_PER_SIDE - 6)) + 3, -(int) (i / (Board.FIELDS_PER_SIDE - 6)) - 1);
         }
 
-        ArrayList<Figure> killed_player2 = window.game.engine.board.killedPlayer2;
+        ArrayList<Figure> killed_player2 = window.getGame().engine.board.killedPlayer2;
         for (int i = 0; i < killed_player2.size(); i++) {
             drawFigure(g2d, killed_player2.get(i), (i % (Board.FIELDS_PER_SIDE - 6)) + 3, Board.FIELDS_PER_SIDE + (int) (i / (Board.FIELDS_PER_SIDE - 6)));
         }
 
-        ArrayList<Figure> killed_player3 = window.game.engine.board.killedPlayer3;
+        ArrayList<Figure> killed_player3 = window.getGame().engine.board.killedPlayer3;
         for (int i = 0; i < killed_player3.size(); i++) {
             drawFigure(g2d, killed_player3.get(i), (int) (i / (Board.FIELDS_PER_SIDE - 6)) + Board.FIELDS_PER_SIDE, (i % (Board.FIELDS_PER_SIDE - 6)) + 3);
         }
 
-        ArrayList<Figure> killed_player4 = window.game.engine.board.killedPlayer4;
+        ArrayList<Figure> killed_player4 = window.getGame().engine.board.killedPlayer4;
         for (int i = 0; i < killed_player4.size(); i++) {
             drawFigure(g2d, killed_player4.get(i), -(int) (i / (Board.FIELDS_PER_SIDE - 6)) - 1, (i % (Board.FIELDS_PER_SIDE - 6)) + 3);
         }
 
         //current player
         g2d.setFont(new Font(Font.DIALOG, Font.PLAIN, (int) (window.getCellSize() * 0.6)));
-        g2d.setColor(window.game.getCurrentPlayer().color);
+        g2d.setColor(window.getGame().getCurrentPlayer().color);
         g2d.drawString("Current Color: ", window.toScreenX(5), window.toScreenY(-2));
         g2d.fillRect(window.toScreenX(9) - (int) (window.getCellSize() * 0.6 / 2), window.toScreenY(-2) - (int) (window.getCellSize() * 0.5), (int) (window.getCellSize() * 0.6), (int) (window.getCellSize() * 0.6));
-
     }
 
     private void drawFigure(Graphics2D g2d, Figure figure, float x, float y) {
-        g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure), window.game), window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize(), this);
+        g2d.drawImage(Asset.getSprite(figure.getPlayer(), getFigureId(figure), window.getGame()), window.toScreenX(x), window.toScreenY(y), (int) window.getCellSize(), (int) window.getCellSize(), this);
     }
 
     private int getFigureId(Figure figure) {

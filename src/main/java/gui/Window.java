@@ -6,6 +6,7 @@ import functional.figure.Figure;
 import util.Position;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
@@ -19,8 +20,11 @@ import java.util.TimerTask;
  */
 
 public class Window {
-    private Canvas canvas;
-    public final Game game;
+    private GameCanvas gameCanvas;
+    private MenuCanvas menuCanvas;
+    private JFrame jFrame;
+
+    private Game game;
 
     private int width;
     private int height;
@@ -34,13 +38,11 @@ public class Window {
     private Position selectedPosition;
     private ArrayList<Position> validMoves;
 
-    public Window(int width, int height, Game engine) {
+    public Window(int width, int height) {
         this.width = width;
         this.height = height;
 
         computeValues();
-
-        this.game = engine;
 
         instantiate();
         repaintClock();
@@ -53,17 +55,21 @@ public class Window {
     }
 
     private void instantiate() {
-        JFrame jFrame = new JFrame();
+        jFrame = new JFrame();
 
         jFrame.setTitle("Chess");
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        canvas = new Canvas(this);
-        jFrame.add(canvas);
+        gameCanvas = new GameCanvas(this);
+        menuCanvas = new MenuCanvas(this);
+
+//        jFrame.add(gameCanvas);
+        jFrame.add(menuCanvas);
+
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
 
-        canvas.addComponentListener(new ComponentAdapter() {
+        gameCanvas.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 width = e.getComponent().getWidth();
@@ -81,7 +87,7 @@ public class Window {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                canvas.repaint();
+                gameCanvas.repaint();
             }
         }, 0, 1000 / 60);
     }
@@ -107,7 +113,8 @@ public class Window {
 
     public void setSelectedPosition(Position selectedPosition) {
         Figure figure = game.engine.board.getFigure(selectedPosition);
-        if (figure == null || (figure.getPlayer() != game.getCurrentPlayer() && game.inOrder) || !game.isAlive(figure.getPlayer())) return;
+        if (figure == null || (figure.getPlayer() != game.getCurrentPlayer() && game.inOrder) || !game.isAlive(figure.getPlayer()))
+            return;
 
         this.selectedPosition = selectedPosition;
 
@@ -174,5 +181,18 @@ public class Window {
 
     public float getCellSize() {
         return cellSize;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void startGame(int playerCount) {
+        jFrame.remove(menuCanvas);
+        jFrame.add(gameCanvas);
+
+        game = new Game(playerCount, true);
+
+        jFrame.pack();
     }
 }
