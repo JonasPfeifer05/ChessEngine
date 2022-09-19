@@ -107,7 +107,8 @@ public class Window {
 
     public void setSelectedPosition(Position selectedPosition) {
         Figure figure = game.engine.board.getFigure(selectedPosition);
-        if (figure == null || (figure.getPlayer() != game.getCurrentPlayer() && game.inOrder) || !game.isAlive(figure.getPlayer())) return;
+        if (figure == null || (figure.getPlayer() != game.getCurrentPlayer() && game.inOrder) || !game.isAlive(figure.getPlayer()))
+            return;
 
         this.selectedPosition = selectedPosition;
 
@@ -128,7 +129,6 @@ public class Window {
             for (Position validMove : validMoves) {
                 if (validMove.equals(position)) {
 
-                    animations.add(new Animation(game.engine.board.getFigure(selectedPosition), selectedPosition, validMove));
                     game.move(selectedPosition, validMove);
 
                     validMoves = null;
@@ -162,6 +162,10 @@ public class Window {
 
     public ArrayList<Animation> getAnimations() {
         return animations;
+    }
+
+    public void addAnimation(Position startPos, Position endPos) {
+        animations.add(new Animation(game.engine.board.getFigure(startPos), startPos, endPos));
     }
 
     public int getWidth() {

@@ -2,6 +2,7 @@ package functional;
 
 import functional.figure.Figure;
 import functional.figure.special.KillLinked;
+import main.Main;
 import util.exceptions.InvalidMoveException;
 import util.Position;
 
