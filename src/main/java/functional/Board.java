@@ -199,7 +199,9 @@ public class Board {
 		throw new IllegalArgumentException("Invalid player");
 	}
 
-	public void move(Position from, Position to) {
+	public void move(Position from, Position to) {move(from, to, true);}
+
+	public void move(Position from, Position to, boolean animate) {
 		if (getFigure(to) != null) {
 			Figure fig = getFigure(to);
 			fig.kill(this);

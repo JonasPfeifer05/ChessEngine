@@ -165,7 +165,7 @@ public class Game {
             Position abs = Position.add(validMove, from);
             engine.board.saveState();
             //Figure save = engine.board.getFigure(abs);
-            engine.board.move(from, abs);
+            engine.board.move(from, abs, false);
 
             if (lookCheck(player)) {
                 invalid.add(validMove);
