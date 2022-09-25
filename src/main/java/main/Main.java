@@ -3,6 +3,7 @@ package main;
 import functional.Game;
 import gui.Window;
 import util.Asset;
+import util.Player;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,7 +12,7 @@ public class Main {
         System.out.println("Huff ist immer noch dumm!");
         System.out.println("Hello World");
 
-        Game game = new Game(4, false);
+        Game game = new Game(4, true);
 
         Asset.setUp();
         new Window(480 / 9 * 16, 480, game);

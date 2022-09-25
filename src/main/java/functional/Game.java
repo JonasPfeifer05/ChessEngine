@@ -21,6 +21,7 @@ public class Game {
     public final int playerCount;
 
     public final boolean inOrder;
+    private final Player player;
 
     private final boolean[] alive = new boolean[]{true, true, true, true};
 
@@ -29,11 +30,16 @@ public class Game {
     }
 
     public Game(int playerCount, boolean inOrder) {
+        this(playerCount, inOrder, null);
+    }
+
+    public Game(int playerCount, boolean inOrder, Player player) {
         KillLinked.setRoundCount(playerCount);
 
         this.engine = new Engine(playerCount);
         this.inOrder = inOrder;
         this.playerCount = playerCount;
+        this.player = player;
     }
 
     public Player getCurrentPlayer() {
@@ -150,7 +156,7 @@ public class Game {
         return getAllValidMoves(from, true);
     }
     public ArrayList<Position> getAllValidMoves(Position from, boolean playerChecking) {
-        if (!isAlive(engine.board.getPlayer(from))) return new ArrayList<>();
+        if (!isAlive(engine.board.getPlayer(from)) || !(this.player == null || this.player == getCurrentPlayer())) return new ArrayList<>();
         if (inOrder && playerChecking) {
             if (engine.board.getFigure(from).getPlayer() != getCurrentPlayer()) return new ArrayList<>();
         }
@@ -210,7 +216,7 @@ public class Game {
 
 
     public void move(Position from, Position to) throws InvalidMoveException {
-        if (!isAlive(engine.board.getPlayer(from))) throw new InvalidMoveException("Player is already dead");
+        if (!isAlive(engine.board.getPlayer(from)) || !(this.player == null || this.player == getCurrentPlayer())) throw new InvalidMoveException("Player is already dead");
         if (inOrder) {
             if (engine.board.getFigure(from).getPlayer() != getCurrentPlayer())
                 throw new InvalidMoveException("Invalid Player selected");
