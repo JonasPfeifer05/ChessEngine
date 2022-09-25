@@ -26,8 +26,16 @@ public class NetworkingGame {
     }
 
     public NetworkingGame(String host, int port, String lobbyName, int playerCount) throws ConstructionException {
+
         client = new Client(host, port);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         client.send(new LobbyCreationResponse(ChessLobby.class, lobbyName, playerCount));
+
     }
 
     public NetworkingGame(String host, int port, String lobbyName) throws ConstructionException {
